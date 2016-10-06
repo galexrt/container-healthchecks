@@ -1,2 +1,2 @@
 # docker-healthchecks
-https://github.com/healthchecks/healthchecks in a simple to use Docker image. WIP
+Simple to use Docker image for https://github.com/healthchecks/healthchecks.
