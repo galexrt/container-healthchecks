@@ -22,7 +22,7 @@ USER healthchecks
 RUN git clone https://github.com/healthchecks/healthchecks.git /healthchecks && \
     cd /healthchecks && \
     virtualenv --python=python3 hc-venv && \
-    source hc-venv/bin/activate && \
+    . hc-venv/bin/activate && \
     pip install -r requirements.txt && \
     easy_install six
 
