@@ -58,6 +58,8 @@ cd /healthchecks || exit 1
 echo "Migrating database ..."
 ./manage.py migrate --noinput
 ./manage.py ensuretriggers
-./manage.py createsuperuser
+
+# TODO Fix user creation or make it into a script
+#./manage.py createsuperuser
 
 exec sudo -u healthchecks -g healthchecks './manage.py runserver'
