@@ -8,7 +8,7 @@ RUN apt-get update && \
 RUN groupadd -g "$HEALTHCHECKS_GROUP" healthchecks && \
     useradd -u "$HEALTHCHECKS_USER" -g "$HEALTHCHECKS_GROUP" -m -d /home/healthchecks -s /bin/bash healthchecks
 
-RUN apt-get install -y python3 postgresql && \
+RUN apt-get install -y python3 python3-virtualenv postgresql && \
     mkdir -p /healthchecks/webapps && \
     chown healthchecks:healthchecks -R /healthchecks && \
     cd /healthchecks && \
