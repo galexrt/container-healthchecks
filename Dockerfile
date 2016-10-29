@@ -12,8 +12,7 @@ RUN apt-get update && \
     apt-key add - && \
     apt-get update && \
     apt-get dist-upgrade -y && \
-    apt-get install -y git && \
-    apt-get install -y python-virtualenv python3 python3-virtualenv python3-dev postgresql-server-dev-9.4 build-essential && \
+    apt-get install -y git python-virtualenv python3 python3-virtualenv python3-dev postgresql-server-dev-9.4 build-essential libxml2-dev libxslt-dev && \
     mkdir -p /healthchecks && \
     chown healthchecks:healthchecks -R /healthchecks
 
@@ -23,7 +22,7 @@ RUN git clone https://github.com/healthchecks/healthchecks.git /healthchecks && 
     cd /healthchecks && \
     virtualenv --python=python3 hc-venv && \
     . hc-venv/bin/activate && \
-    pip install -r requirements.txt && \
+    pip install -r /healthchecks/requirements.txt && \
     easy_install six
 
 USER root
