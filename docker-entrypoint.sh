@@ -67,7 +67,7 @@ appRun() {
     su healthchecks -c 'source /healthchecks/hc-venv/bin/activate; ./manage.py migrate --noinput'
 
     { while true; do su healthchecks -c './manage.py sendalerts'; sleep 30; done } &
-    exec su healthchecks -c 'source /healthchecks/hc-venv/bin/activate; ./manage.py runserver'
+    exec su healthchecks -c 'source /healthchecks/hc-venv/bin/activate; ./manage.py runserver 0.0.0.0:8000'
 }
 
 appManagePy() {
