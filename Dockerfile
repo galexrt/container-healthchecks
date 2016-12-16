@@ -29,8 +29,9 @@ USER root
 
 RUN apt-get --purge remove -y build-essential python3-dev
 
+COPY docker-entrypoint.sh /
 COPY includes/ /usr/bin/
 
-ENTRYPOINT ["docker-entrypoint.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
 
 CMD ["app:run"]
