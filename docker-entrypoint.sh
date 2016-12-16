@@ -64,10 +64,9 @@ appRun() {
 
     cd /healthchecks || exit 1
     echo "Migrating database ..."
-    ./manage.py migrate --noinput
-    ./manage.py ensuretriggers
+    su healthchecks -c 'source /healthchecks/hc-venv/bin/activate; ./manage.py migrate --noinput'
 
-    exec su -c './manage.py runserver'
+    exec su healthchecks -c 'source /healthchecks/hc-venv/bin/activate; ./manage.py runserver'
 }
 
 appManagePy() {
@@ -79,7 +78,7 @@ appManagePy() {
     fi
     echo "Running manage.py ..."
     set +e
-    exec su healthchecks -c "/home/zulip/deployments/current/manage.py $COMMAND $@"
+    exec su healthchecks -c "source /healthchecks/hc-venv/bin/activate; /home/zulip/deployments/current/manage.py $COMMAND $@"
 }
 
 appHelp() {
