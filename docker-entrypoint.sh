@@ -42,6 +42,9 @@ EOF
 }
 
 settingsConfiguration() {
+    if [ -z ${HC_HOST+x} ]; then
+        export HC_HOST="0.0.0.0"
+    fi
     if [ ! -z ${HC_SITE_ROOT+x} ] && [ -z ${HC_PING_ENDPOINT} ]; then
         export HC_PING_ENDPOINT="$HC_SITE_ROOT/ping/"
     fi
@@ -53,8 +56,25 @@ settingsConfiguration() {
             echo "Empty var for key \"$setting_key\"."
             continue
         fi
+	case "$setting_var";
+            [Tt][Rr][Uu][Ee]|[Ff][Aa][Ll][Ss][Ee])
+                setting_type="plain"
+            ;;
+            \[*\])
+                setting_type="plain"
+            ;;
+            *)
+                setting_type="string"
+            ;;
+	esac
+        if [ "$setting_type" = "plain" ] || [ "$setting_key" = "ALLOWED_HOSTS" ] || \
+            [ "$setting_key" = "AUTHENTICATION_BACKENDS" ] || [ "$setting_key" = "TEMPLATES" ] || \
+            [ "$setting_key" = "STATICFILES_FINDERS" ]; then
+            echo "$setting_key = $setting_var" >> /healthchecks/hc/settings.py
+        else
+            echo "$setting_key = \"$setting_var\"" >> /healthchecks/hc/settings.py
+        fi
         echo "Added \"$setting_key\" (value \"$setting_var\") to settings.py"
-        echo "$setting_key = \"$setting_var\"" >> /healthchecks/hc/settings.py
     done
 }
 
