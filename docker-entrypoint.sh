@@ -51,7 +51,7 @@ settingsConfiguration() {
             continue
         fi
         echo "Added \"$setting_key\" (value \"$setting_var\") to settings.py"
-        echo "$setting_key = \"$setting_var\"" >> /healthchecks/hc/local_settings.py
+        echo "$setting_key = \"$setting_var\"" >> /healthchecks/hc/settings.py
     done
 }
 
