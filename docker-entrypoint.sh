@@ -42,6 +42,9 @@ EOF
 }
 
 settingsConfiguration() {
+    if [ ! -z ${HC_SITE_ROOT+x} ] && [ -z ${HC_PING_ENDPOINT} ]; then
+        export HC_PING_ENDPOINT="$HC_SITE_ROOT/ping/"
+    fi
     given_settings=($(env | sed -n -r "s/HC_([0-9A-Za-z_]*).*/\1/p"))
     for setting_key in "${given_settings[@]}"; do
         key="HC_$setting_key"
