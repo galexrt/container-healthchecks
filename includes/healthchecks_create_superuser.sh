@@ -2,4 +2,6 @@
 
 cd /healthchecks || exit 1
 
-/healthchecks/manage.py createsuperuser
+source /healthchecks/hc-venv/bin/activate
+
+./manage.py createsuperuser
