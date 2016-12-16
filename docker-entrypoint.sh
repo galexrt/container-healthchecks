@@ -56,7 +56,7 @@ settingsConfiguration() {
             echo "Empty var for key \"$setting_key\"."
             continue
         fi
-	case "$setting_var";
+	case "$setting_var" in
             [Tt][Rr][Uu][Ee]|[Ff][Aa][Ll][Ss][Ee])
                 setting_type="plain"
             ;;
