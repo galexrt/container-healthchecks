@@ -67,7 +67,7 @@ appRun() {
     ./manage.py migrate --noinput
     ./manage.py ensuretriggers
 
-    exec sudo -u healthchecks -g healthchecks './manage.py runserver'
+    exec su -c './manage.py runserver'
 }
 
 appManagePy() {
@@ -79,13 +79,13 @@ appManagePy() {
     fi
     echo "Running manage.py ..."
     set +e
-    exec su zulip -c "/home/zulip/deployments/current/manage.py $COMMAND $*"
+    exec su healthchecks -c "/home/zulip/deployments/current/manage.py $COMMAND $@"
 }
 
 appHelp() {
     echo "Available commands:"
     echo "> app:help     - Show this help menu and exit"
-    echo "> app:managepy - Run Zulip's manage.py script (defaults to \"shell\")"
+    echo "> app:managepy - Run Healthchecks's manage.py script (defaults to \"shell\")"
     echo "> app:run      - Run the Zulip server"
     echo "> [COMMAND]    - Run given command with arguments in shell"
 }
