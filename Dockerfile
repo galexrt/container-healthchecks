@@ -6,7 +6,7 @@ RUN groupadd -g "$HEALTHCHECKS_GROUP" healthchecks && \
     useradd -u "$HEALTHCHECKS_USER" -g "$HEALTHCHECKS_GROUP" -m -d /home/healthchecks -s /bin/bash healthchecks
 
 RUN apt-get update && \
-    apt-get install -y wget && \
+    apt-get install -y wget sudo && \
     echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" > /etc/apt/sources.list.d/psql.list && \
     wget -q -O- https://www.postgresql.org/media/keys/ACCC4CF8.asc | \
     apt-key add - && \
