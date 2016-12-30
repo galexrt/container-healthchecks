@@ -32,6 +32,8 @@ RUN apt-get --purge remove -y build-essential python3-dev
 COPY docker-entrypoint.sh /
 COPY includes/ /usr/bin/
 
+EXPOSE 8000/tcp
+
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 CMD ["app:run"]
