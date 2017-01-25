@@ -27,4 +27,3 @@ docker run \
     -e 'HC_EMAIL_HOST_PASSWORD=YOUR_PASSWORD' \
     galexrt/healthchecks:latest
 ```
-
