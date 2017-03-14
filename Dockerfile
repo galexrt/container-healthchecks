@@ -12,7 +12,7 @@ RUN apt-get update && \
     apt-key add - && \
     apt-get update && \
     apt-get dist-upgrade -y && \
-    apt-get install -y git python-virtualenv python3 python3-virtualenv python3-dev python-mysqldb postgresql-server-dev-9.4 build-essential libxml2-dev libxslt-dev libz-dev && \
+    apt-get install -y git python-virtualenv python3 python3-virtualenv python3-dev python-mysqldb postgresql-server-dev-9.4 build-essential libxml2-dev libxslt-dev libz-dev libmysqlclient-dev && \
     mkdir -p /healthchecks && \
     chown healthchecks:healthchecks -R /healthchecks
 
