@@ -23,6 +23,7 @@ RUN git clone https://github.com/healthchecks/healthchecks.git /healthchecks && 
     virtualenv --python=python3 hc-venv && \
     . hc-venv/bin/activate && \
     pip install -r /healthchecks/requirements.txt && \
+    pip install -r mysqldb && \
     easy_install six
 
 USER root
