@@ -25,5 +25,5 @@ docker run \
     -e 'HC_EMAIL_USE_TLS=True' \
     -e 'HC_EMAIL_HOST_USER=user@example.com' \
     -e 'HC_EMAIL_HOST_PASSWORD=YOUR_PASSWORD' \
-    galexrt/healthchecks:latest
+    gwdp/healthchecks:latest
 ```
