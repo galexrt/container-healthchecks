@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DB_TYPE="${DB_TYPE:-sqlite}"
+DB_TYPE="${DB_TYPE:-sqlite3}"
 DB_HOST="${DB_HOST:-127.0.0.1}"
 DB_PORT="${DB_PORT:-3306}"
 DB_NAME="${DB_NAME:-healthchecks}"
@@ -24,7 +24,7 @@ databaseConfiguration() {
 #EOF
 
     touch /healthchecks/hc/local_settings.py
-    if [ "$DB_TYPE" != "sqlite" ]; then
+    if [ "$DB_TYPE" != "sqlite3" ]; then
         cat <<EOF > /healthchecks/hc/local_settings.py
 DATABASES = {
     'default': {
@@ -133,7 +133,7 @@ case "$1" in
         else
             COMMAND="$1"
             if [[ -n $(which $COMMAND) ]] ; then
-                echo "=> Running command: $(which $COMMAND) $@"
+                echo "=> Running command: $(which $COMMAND) $*"
                 shift 1
                 exec "$(which $COMMAND)" "$@"
             else
