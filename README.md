@@ -46,4 +46,4 @@ You need the container name or id of the healthchecks instance. You can get it b
 ```
 docker exec -it CONTAINER_NAME healthchecks_create_superuser.sh
 ```
-Follow the assistance that will show up to create a healthchecks superuser.
+Follow the assistant that will show up to create a healthchecks superuser.
