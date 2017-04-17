@@ -25,7 +25,7 @@ RUN groupadd -g "$HEALTHCHECKS_GROUP" healthchecks && \
     apt-get --purge remove -y build-essential python3-dev && \
     rm -rf /tmp/*
 
-COPY docker-entrypoint.sh /
+COPY entrypoint.sh /entrypoint.sh
 COPY includes/ /usr/bin/
 
 EXPOSE 8000/tcp
