@@ -30,6 +30,6 @@ COPY includes/ /usr/bin/
 
 EXPOSE 8000/tcp
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["app:run"]
