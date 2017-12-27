@@ -65,6 +65,20 @@ HC_SECRET_KEY # set to a random secret value (if changed sessions are invalidate
 Checkout the [`settings.py`](), if you want to set one of these variable as a setting you have to prefix it with `HC_`.
 Example for variable `SLACK_CLIENT_ID` would be environment variable `HC_SLACK_CLIENT_ID` for the container.
 
+### Run `manage.py` inside the container
+You need the container name or id of the healthchecks instance. You can get it by running `docker ps` and searching for the container running healthchecks.
+```
+docker exec -it CONTAINER_NAME /entrypoint.sh app:managepy YOUR_MANAGE_PY_FLAGS_COMMAND
+```
+### Activating Telegram Bot
+Use the command from the last section and for `YOUR_MANAGE_PY_FLAGS_COMMAND` use this:
+```
+settelegramwebhook
+```
+For this to work, you need to have set the following variables:
+* `SITE_NAME`
+* `TELEGRAM_TOKEN`
+
 ### Create Healthchecks superuser
 You need the container name or id of the healthchecks instance. You can get it by running `docker ps` and searching for the container running healthchecks.
 ```
