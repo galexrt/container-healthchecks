@@ -9,6 +9,7 @@ DB_PASSWORD="${DB_PASSWORD:-healthchecks}"
 # Possible settings
 # HC_SITE_ROOT=""
 # HC_SITE_NAME=""
+HC_SECRET_KEY="${HC_SECRET_KEY:-$(openssl rand -base64 32)}"
 
 if [ "$HEALTHCHECKS_USER" != "3000" ]; then
     usermod -u "$HEALTHCHECKS_USER" healthchecks
@@ -18,13 +19,17 @@ if [ "$HEALTHCHECKS_GROUP" != "3000" ]; then
 fi
 
 databaseConfiguration() {
-    # TODO Wait for database and create database if not exists
-    #psql --user postgres <<EOF
-#create database hc;
-#EOF
-
     touch /healthchecks/hc/local_settings.py
-    if [ "$DB_TYPE" != "sqlite3" ]; then
+    if [ "$DB_TYPE" = "sqlite3" ]; then
+        cat <<EOF > /healthchecks/hc/local_settings.py
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': '/data/hc.sqlite',
+    }
+}
+EOF
+    else
         cat <<EOF > /healthchecks/hc/local_settings.py
 DATABASES = {
     'default': {
@@ -42,13 +47,13 @@ EOF
 }
 
 settingsConfiguration() {
-    if [ -z ${HC_HOST+x} ]; then
+    if [ -z "${HC_HOST+x}" ]; then
         export HC_HOST="0.0.0.0"
     fi
-    if [ ! -z ${HC_SITE_ROOT+x} ] && [ -z ${HC_PING_ENDPOINT} ]; then
+    if [ ! -z "${HC_SITE_ROOT+x}" ] && [ -z "${HC_PING_ENDPOINT}" ]; then
         export HC_PING_ENDPOINT="$HC_SITE_ROOT/ping/"
     fi
-    given_settings=($(env | sed -n -r "s/HC_([0-9A-Za-z_]*).*/\1/p"))
+    given_settings=($(env | sed -n -r 's/HC_([0-9A-Za-z_]*).*/\1/p'))
     for setting_key in "${given_settings[@]}"; do
         key="HC_$setting_key"
         setting_var="${!key}"
@@ -61,6 +66,12 @@ settingsConfiguration() {
                 setting_type="plain"
             ;;
             \[*\])
+                setting_type="plain"
+            ;;
+            [0-9]*.[0-9]**)
+                setting_type="string"
+            ;;
+            [0-9]*)
                 setting_type="plain"
             ;;
             *)
@@ -87,10 +98,10 @@ appRun() {
 
     cd /healthchecks || exit 1
     echo "Migrating database ..."
-    su healthchecks -c 'source /healthchecks/hc-venv/bin/activate; ./manage.py migrate --noinput'
+    su healthchecks -c './manage.py migrate --noinput'
 
-    { while true; do su healthchecks -c 'source /healthchecks/hc-venv/bin/activate; ./manage.py sendalerts'; sleep 30; done } &
-    exec su healthchecks -c 'source /healthchecks/hc-venv/bin/activate; ./manage.py runserver 0.0.0.0:8000'
+    { while true; do su healthchecks -c './manage.py sendalerts'; sleep 30; done } &
+    exec su healthchecks -c './manage.py runserver 0.0.0.0:8000'
 }
 
 appManagePy() {
@@ -102,7 +113,7 @@ appManagePy() {
     fi
     echo "Running manage.py ..."
     set +e
-    exec su healthchecks -c "source /healthchecks/hc-venv/bin/activate; /home/zulip/deployments/current/manage.py $COMMAND $@"
+    exec su healthchecks -c "/home/zulip/deployments/current/manage.py $COMMAND" "$@"
 }
 
 appHelp() {
@@ -132,10 +143,10 @@ case "$1" in
             $1
         else
             COMMAND="$1"
-            if [[ -n $(which $COMMAND) ]] ; then
-                echo "=> Running command: $(which $COMMAND) $*"
+            if [[ -n $(which "$COMMAND") ]] ; then
+                echo "=> Running command: $(which "$COMMAND") $*"
                 shift 1
-                exec "$(which $COMMAND)" "$@"
+                exec "$(which "$COMMAND")" "$@"
             else
                 appHelp
             fi

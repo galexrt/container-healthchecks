@@ -19,6 +19,7 @@ docker run \
     --name=healthchecks \
     -p 80:8000 \
     -e 'HC_HOST=0.0.0.0' \
+    -e 'HC_SECRET_KEY=YOUR_SECRET_KEY' \
     -e 'HC_PING_EMAIL_DOMAIN=example.com' \
     -e 'HC_SITE_ROOT=http://example.com' \
     -e 'HC_EMAIL_HOST=smtp.example.com' \
@@ -26,6 +27,7 @@ docker run \
     -e 'HC_EMAIL_USE_TLS=True' \
     -e 'HC_EMAIL_HOST_USER=user@example.com' \
     -e 'HC_EMAIL_HOST_PASSWORD=YOUR_PASSWORD' \
+    -e 'HC_ALLOWED_HOSTS=["*"]' \
     galexrt/healthchecks:latest
 ```
 
@@ -40,6 +42,42 @@ DB_NAME # the database name
 DB_USER # the database user
 DB_PASSWORD # the database user password
 ```
+
+### Email configuration
+The following environment variables can be used to configure the smtp/mail sending:
+```
+HC_EMAIL_HOST # the smtp host address
+HC_EMAIL_PORT # the smtp host port
+HC_EMAIL_USE_TLS # if tls should be used for smtp
+HC_EMAIL_HOST_USER # the smtp user
+HC_EMAIL_HOST_PASSWORD # the smtp user password
+```
+
+### Special configuration variables
+The following environment variables can be used to configure some "special" values for Healthchecks:
+```
+HC_HOST # the listen address
+HC_ALLOWED_HOSTS # the allowed hosts (value for dynamic container environment is `["*"]`)
+HC_SECRET_KEY # set to a random secret value (if changed sessions are invalidated)
+```
+
+### Other configuration variables
+Checkout the [`settings.py`](), if you want to set one of these variable as a setting you have to prefix it with `HC_`.
+Example for variable `SLACK_CLIENT_ID` would be environment variable `HC_SLACK_CLIENT_ID` for the container.
+
+### Run `manage.py` inside the container
+You need the container name or id of the healthchecks instance. You can get it by running `docker ps` and searching for the container running healthchecks.
+```
+docker exec -it CONTAINER_NAME /entrypoint.sh app:managepy YOUR_MANAGE_PY_FLAGS_COMMAND
+```
+### Activating Telegram Bot
+Use the command from the last section and for `YOUR_MANAGE_PY_FLAGS_COMMAND` use this:
+```
+settelegramwebhook
+```
+For this to work, you need to have set the following variables:
+* `SITE_NAME`
+* `TELEGRAM_TOKEN`
 
 ### Create Healthchecks superuser
 You need the container name or id of the healthchecks instance. You can get it by running `docker ps` and searching for the container running healthchecks.
