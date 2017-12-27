@@ -1,7 +1,7 @@
 FROM debian:jessie
 MAINTAINER Alexander Trost <galexrt@googlemail.com>
 
-ENV HEALTHCHECKS_USER="1000" HEALTHCHECKS_GROUP="1000"
+ENV HEALTHCHECKS_VERSION="master" HEALTHCHECKS_USER="1000" HEALTHCHECKS_GROUP="1000"
 
 RUN groupadd -g "$HEALTHCHECKS_GROUP" healthchecks && \
     useradd -u "$HEALTHCHECKS_USER" -g "$HEALTHCHECKS_GROUP" -m -d /home/healthchecks -s /bin/bash healthchecks && \
@@ -17,10 +17,11 @@ RUN groupadd -g "$HEALTHCHECKS_GROUP" healthchecks && \
     chown healthchecks:healthchecks -R /healthchecks && \
     sudo -u healthchecks -g healthchecks sh -c "git clone https://github.com/healthchecks/healthchecks.git /healthchecks && \
     cd /healthchecks && \
-    pip install -r /healthchecks/requirements.txt && \
-    pip install mysqlclient && \
-    easy_install six" && \
-    pip install gunicorn && \
+    git checkout $HEALTHCHECKS_VERSION && \
+    pip3 install -r /healthchecks/requirements.txt && \
+    pip3 install mysqlclient && \
+    easy_install3 six" && \
+    pip3 install gunicorn && \
     apt-get --purge remove -y build-essential python3-dev && \
     apt-get -q autoremove -y && \
     rm -rf /tmp/*
