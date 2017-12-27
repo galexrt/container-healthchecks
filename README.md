@@ -26,6 +26,7 @@ docker run \
     -e 'HC_EMAIL_USE_TLS=True' \
     -e 'HC_EMAIL_HOST_USER=user@example.com' \
     -e 'HC_EMAIL_HOST_PASSWORD=YOUR_PASSWORD' \
+    -e 'HC_ALLOWED_HOSTS=["*"]' \
     galexrt/healthchecks:latest
 ```
 
@@ -40,6 +41,10 @@ DB_NAME # the database name
 DB_USER # the database user
 DB_PASSWORD # the database user password
 ```
+
+### Other configuration variables
+Checkout the [`settings.py`](), if you want to set one of these variable as a setting you have to prefix it with `HC_`.
+Example for variable `SLACK_CLIENT_ID` would be environment variable `HC_SLACK_CLIENT_ID` for the container.
 
 ### Create Healthchecks superuser
 You need the container name or id of the healthchecks instance. You can get it by running `docker ps` and searching for the container running healthchecks.

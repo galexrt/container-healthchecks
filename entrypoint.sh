@@ -42,10 +42,10 @@ EOF
 }
 
 settingsConfiguration() {
-    if [ -z ${HC_HOST+x} ]; then
+    if [ -z "${HC_HOST+x}" ]; then
         export HC_HOST="0.0.0.0"
     fi
-    if [ ! -z ${HC_SITE_ROOT+x} ] && [ -z ${HC_PING_ENDPOINT} ]; then
+    if [ ! -z "${HC_SITE_ROOT+x}" ] && [ -z "${HC_PING_ENDPOINT}" ]; then
         export HC_PING_ENDPOINT="$HC_SITE_ROOT/ping/"
     fi
     given_settings=($(env | sed -n -r "s/HC_([0-9A-Za-z_]*).*/\1/p"))
@@ -61,6 +61,12 @@ settingsConfiguration() {
                 setting_type="plain"
             ;;
             \[*\])
+                setting_type="plain"
+            ;;
+            [0-9]*.[0-9]**)
+                setting_type="string"
+            ;;
+            [0-9]*)
                 setting_type="plain"
             ;;
             *)
@@ -102,7 +108,7 @@ appManagePy() {
     fi
     echo "Running manage.py ..."
     set +e
-    exec su healthchecks -c "source /healthchecks/hc-venv/bin/activate; /home/zulip/deployments/current/manage.py $COMMAND $@"
+    exec su healthchecks -c "source /healthchecks/hc-venv/bin/activate; /home/zulip/deployments/current/manage.py $COMMAND" "$@"
 }
 
 appHelp() {
@@ -132,10 +138,10 @@ case "$1" in
             $1
         else
             COMMAND="$1"
-            if [[ -n $(which $COMMAND) ]] ; then
-                echo "=> Running command: $(which $COMMAND) $*"
+            if [[ -n $(which "$COMMAND") ]] ; then
+                echo "=> Running command: $(which "$COMMAND") $*"
                 shift 1
-                exec "$(which $COMMAND)" "$@"
+                exec "$(which "$COMMAND")" "$@"
             else
                 appHelp
             fi
