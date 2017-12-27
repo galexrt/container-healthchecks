@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd /healthchecks || { echo "/healthchecks directory not found. Exit 1"; exit 1; }
+
 DB_TYPE="${DB_TYPE:-sqlite3}"
 DB_HOST="${DB_HOST:-127.0.0.1}"
 DB_PORT="${DB_PORT:-3306}"
@@ -9,7 +11,7 @@ DB_PASSWORD="${DB_PASSWORD:-healthchecks}"
 # Possible settings
 # HC_SITE_ROOT=""
 # HC_SITE_NAME=""
-HC_SECRET_KEY="${HC_SECRET_KEY:-$(openssl rand -base64 32)}"
+export HC_SECRET_KEY="${HC_SECRET_KEY:-$(openssl rand -base64 32)}"
 
 if [ "$HEALTHCHECKS_USER" != "3000" ]; then
     usermod -u "$HEALTHCHECKS_USER" healthchecks
@@ -96,7 +98,6 @@ appRun() {
     echo "Correcting config file permissions ..."
     chmod 755 -f /healthchecks/hc/settings.py /healthchecks/hc/local_settings.py
 
-    cd /healthchecks || exit 1
     echo "Migrating database ..."
     su healthchecks -c 'python3 /healthchecks/manage.py migrate --noinput'
 
