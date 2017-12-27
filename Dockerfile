@@ -12,7 +12,7 @@ RUN groupadd -g "$HEALTHCHECKS_GROUP" healthchecks && \
     apt-key add - && \
     apt-get update && \
     apt-get dist-upgrade -y && \
-    apt-get install -y git python3 python3-dev python-mysqldb postgresql-server-dev-9.4 build-essential libxml2-dev libxslt-dev libz-dev libmysqlclient-dev && \
+    apt-get install -y git python3 python3-dev python3-pip python3-setuptools python-mysqldb postgresql-server-dev-9.4 build-essential libxml2-dev libxslt-dev libz-dev libmysqlclient-dev && \
     mkdir -p /healthchecks && \
     chown healthchecks:healthchecks -R /healthchecks && \
     sudo -u healthchecks -g healthchecks sh -c "git clone https://github.com/healthchecks/healthchecks.git /healthchecks && \
@@ -20,7 +20,9 @@ RUN groupadd -g "$HEALTHCHECKS_GROUP" healthchecks && \
     pip install -r /healthchecks/requirements.txt && \
     pip install mysqlclient && \
     easy_install six" && \
+    pip install gunicorn && \
     apt-get --purge remove -y build-essential python3-dev && \
+    apt-get -q autoremove -y && \
     rm -rf /tmp/*
 
 COPY entrypoint.sh /entrypoint.sh
