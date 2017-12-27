@@ -1,7 +1,7 @@
 FROM debian:jessie
 MAINTAINER Alexander Trost <galexrt@googlemail.com>
 
-ENV HEALTHCHECKS_VERSION="master" HEALTHCHECKS_USER="1000" HEALTHCHECKS_GROUP="1000"
+ENV DATA_DIR="/data" HEALTHCHECKS_VERSION="master" HEALTHCHECKS_USER="1000" HEALTHCHECKS_GROUP="1000"
 
 RUN groupadd -g "$HEALTHCHECKS_GROUP" healthchecks && \
     useradd -u "$HEALTHCHECKS_USER" -g "$HEALTHCHECKS_GROUP" -m -d /home/healthchecks -s /bin/bash healthchecks && \
@@ -14,8 +14,8 @@ RUN groupadd -g "$HEALTHCHECKS_GROUP" healthchecks && \
     apt-get dist-upgrade -y && \
     apt-get install -y git python3 python3-dev python3-setuptools python3-dateutil python-mysqldb postgresql-server-dev-9.4 build-essential libxml2-dev libxslt-dev libz-dev libmysqlclient-dev && \
     easy_install3 -U pip && \
-    mkdir -p /healthchecks && \
-    chown healthchecks:healthchecks -R /healthchecks && \
+    mkdir -p /healthchecks "$DATA_DIR" && \
+    chown healthchecks:healthchecks -R /healthchecks "$DATA_DIR" && \
     easy_install3 six && \
     sudo -u healthchecks -g healthchecks sh -c "git clone https://github.com/healthchecks/healthchecks.git /healthchecks && \
     cd /healthchecks && \
@@ -29,6 +29,8 @@ RUN groupadd -g "$HEALTHCHECKS_GROUP" healthchecks && \
 
 COPY entrypoint.sh /entrypoint.sh
 COPY includes/scripts/ /usr/local/bin/
+
+VOLUME ["$DATA_DIR"]
 
 EXPOSE 8000/tcp
 
