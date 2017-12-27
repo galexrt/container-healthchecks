@@ -19,13 +19,17 @@ if [ "$HEALTHCHECKS_GROUP" != "3000" ]; then
 fi
 
 databaseConfiguration() {
-    # TODO Wait for database and create database if not exists
-    #psql --user postgres <<EOF
-#create database hc;
-#EOF
-
     touch /healthchecks/hc/local_settings.py
-    if [ "$DB_TYPE" != "sqlite3" ]; then
+    if [ "$DB_TYPE" = "sqlite3" ]; then
+        cat <<EOF > /healthchecks/hc/local_settings.py
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': '/data/hc.sqlite',
+    }
+}
+EOF
+    else
         cat <<EOF > /healthchecks/hc/local_settings.py
 DATABASES = {
     'default': {
@@ -49,7 +53,7 @@ settingsConfiguration() {
     if [ ! -z "${HC_SITE_ROOT+x}" ] && [ -z "${HC_PING_ENDPOINT}" ]; then
         export HC_PING_ENDPOINT="$HC_SITE_ROOT/ping/"
     fi
-    given_settings=($(env | sed -n -r "s/HC_([0-9A-Za-z_]*).*/\1/p"))
+    given_settings=($(env | sed -n -r 's/HC_([0-9A-Za-z_]*).*/\1/p'))
     for setting_key in "${given_settings[@]}"; do
         key="HC_$setting_key"
         setting_var="${!key}"

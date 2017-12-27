@@ -15,12 +15,12 @@ RUN groupadd -g "$HEALTHCHECKS_GROUP" healthchecks && \
     apt-get install -y git python3 python3-dev python3-pip python3-setuptools python-mysqldb postgresql-server-dev-9.4 build-essential libxml2-dev libxslt-dev libz-dev libmysqlclient-dev && \
     mkdir -p /healthchecks && \
     chown healthchecks:healthchecks -R /healthchecks && \
-    sudo -u healthchecks -g healthchecks sh -c "git clone https://github.com/healthchecks/healthchecks.git /healthchecks && \
+    git clone https://github.com/healthchecks/healthchecks.git /healthchecks && \
     cd /healthchecks && \
     git checkout $HEALTHCHECKS_VERSION && \
     pip3 install -r /healthchecks/requirements.txt && \
     pip3 install mysqlclient && \
-    easy_install3 six" && \
+    easy_install3 six && \
     pip3 install gunicorn && \
     apt-get --purge remove -y build-essential python3-dev && \
     apt-get -q autoremove -y && \
