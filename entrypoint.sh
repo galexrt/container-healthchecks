@@ -98,10 +98,10 @@ appRun() {
 
     cd /healthchecks || exit 1
     echo "Migrating database ..."
-    su healthchecks -c './manage.py migrate --noinput'
+    su healthchecks -c 'python3 /healthchecks/manage.py migrate --noinput'
 
-    { while true; do su healthchecks -c './manage.py sendalerts'; sleep 30; done } &
-    exec su healthchecks -c './manage.py runserver 0.0.0.0:8000'
+    { while true; do su healthchecks -c 'python3 /healthchecks/manage.py sendalerts'; sleep 30; done } &
+    exec su healthchecks -c 'python3 /healthchecks/manage.py runserver 0.0.0.0:8000'
 }
 
 appManagePy() {
@@ -113,14 +113,14 @@ appManagePy() {
     fi
     echo "Running manage.py ..."
     set +e
-    exec su healthchecks -c "/home/zulip/deployments/current/manage.py $COMMAND" "$@"
+    exec su healthchecks -c "python3 /healthchecks/manage.py $COMMAND" "$@"
 }
 
 appHelp() {
     echo "Available commands:"
     echo "> app:help     - Show this help menu and exit"
     echo "> app:managepy - Run Healthchecks's manage.py script (defaults to \"shell\")"
-    echo "> app:run      - Run the Zulip server"
+    echo "> app:run      - Run Healthchecks"
     echo "> [COMMAND]    - Run given command with arguments in shell"
 }
 

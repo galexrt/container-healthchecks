@@ -49,6 +49,7 @@ The following environment variables can be used to configure the smtp/mail sendi
 HC_EMAIL_HOST # the smtp host address
 HC_EMAIL_PORT # the smtp host port
 HC_EMAIL_USE_TLS # if tls should be used for smtp
+HC_EMAIL_USE_SSL # if ssl should be used for smtp
 HC_EMAIL_HOST_USER # the smtp user
 HC_EMAIL_HOST_PASSWORD # the smtp user password
 ```
