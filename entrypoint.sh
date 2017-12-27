@@ -63,7 +63,7 @@ settingsConfiguration() {
             echo "Empty var for key \"$setting_key\"."
             continue
         fi
-	case "$setting_var" in
+	    case "$setting_var" in
             [Tt][Rr][Uu][Ee]|[Ff][Aa][Ll][Ss][Ee])
                 setting_type="plain"
             ;;
@@ -79,10 +79,17 @@ settingsConfiguration() {
             *)
                 setting_type="string"
             ;;
-	esac
-        if [ "$setting_type" = "plain" ] || [ "$setting_key" = "ALLOWED_HOSTS" ] || \
+	    esac
+
+        if [ "$setting_key" = "SECRET_KEY" ] || [ "$setting_key" = "HC_HOST" ]; then
+            setting_type="string"
+        elif [ "$setting_key" = "ALLOWED_HOSTS" ] || \
             [ "$setting_key" = "AUTHENTICATION_BACKENDS" ] || [ "$setting_key" = "TEMPLATES" ] || \
             [ "$setting_key" = "STATICFILES_FINDERS" ]; then
+                setting_type="plain"
+        fi
+
+        if [ "$setting_type" = "plain" ]; then
             echo "$setting_key = $setting_var" >> /healthchecks/hc/settings.py
         else
             echo "$setting_key = \"$setting_var\"" >> /healthchecks/hc/settings.py
@@ -102,7 +109,7 @@ appRun() {
     su healthchecks -c 'python3 /healthchecks/manage.py migrate --noinput'
 
     { while true; do su healthchecks -c 'python3 /healthchecks/manage.py sendalerts'; sleep 30; done } &
-    exec su healthchecks -c 'python3 /healthchecks/manage.py runserver 0.0.0.0:8000'
+    exec supervisor
 }
 
 appManagePy() {
