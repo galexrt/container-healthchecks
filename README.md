@@ -8,7 +8,7 @@ Image available from:
 * [**Docker Hub**](https://hub.docker.com/r/galexrt/healthchecks)
 
 
-Simple to use Docker image for [https://github.com/healthchecks/healthchecks](https://github.com/healthchecks/healthchecks).
+Simple to use Docker image for [https://github.com/healthchecks/healthchecks](github.com/healthchecks/healthchecks).
 
 ## Running the image
 **If you want to add a variable as a setting you have to prefix it with `HC_`.**
