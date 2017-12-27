@@ -58,7 +58,7 @@ The following environment variables can be used to configure some "special" valu
 ```
 HC_HOST # the listen address
 HC_ALLOWED_HOSTS # the allowed hosts (value for dynamic container environment is `["*"]`)
-HC_SECRET_KEY # set to a random secret value (don't change as it may corrupt data in the database)
+HC_SECRET_KEY # set to a random secret value (if changed sessions are invalidated)
 ```
 
 ### Other configuration variables

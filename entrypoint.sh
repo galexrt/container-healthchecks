@@ -9,6 +9,7 @@ DB_PASSWORD="${DB_PASSWORD:-healthchecks}"
 # Possible settings
 # HC_SITE_ROOT=""
 # HC_SITE_NAME=""
+HC_SECRET_KEY="${HC_SECRET_KEY:-$(openssl rand -base64 32)}"
 
 if [ "$HEALTHCHECKS_USER" != "3000" ]; then
     usermod -u "$HEALTHCHECKS_USER" healthchecks
@@ -93,10 +94,10 @@ appRun() {
 
     cd /healthchecks || exit 1
     echo "Migrating database ..."
-    su healthchecks -c 'source /healthchecks/hc-venv/bin/activate; ./manage.py migrate --noinput'
+    su healthchecks -c './manage.py migrate --noinput'
 
-    { while true; do su healthchecks -c 'source /healthchecks/hc-venv/bin/activate; ./manage.py sendalerts'; sleep 30; done } &
-    exec su healthchecks -c 'source /healthchecks/hc-venv/bin/activate; ./manage.py runserver 0.0.0.0:8000'
+    { while true; do su healthchecks -c './manage.py sendalerts'; sleep 30; done } &
+    exec su healthchecks -c './manage.py runserver 0.0.0.0:8000'
 }
 
 appManagePy() {
@@ -108,7 +109,7 @@ appManagePy() {
     fi
     echo "Running manage.py ..."
     set +e
-    exec su healthchecks -c "source /healthchecks/hc-venv/bin/activate; /home/zulip/deployments/current/manage.py $COMMAND" "$@"
+    exec su healthchecks -c "/home/zulip/deployments/current/manage.py $COMMAND" "$@"
 }
 
 appHelp() {
