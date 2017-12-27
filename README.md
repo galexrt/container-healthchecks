@@ -19,6 +19,7 @@ docker run \
     --name=healthchecks \
     -p 80:8000 \
     -e 'HC_HOST=0.0.0.0' \
+    -e 'HC_SECRET_KEY=YOUR_SECRET_KEY' \
     -e 'HC_PING_EMAIL_DOMAIN=example.com' \
     -e 'HC_SITE_ROOT=http://example.com' \
     -e 'HC_EMAIL_HOST=smtp.example.com' \
@@ -40,6 +41,24 @@ DB_PORT # the database host port
 DB_NAME # the database name
 DB_USER # the database user
 DB_PASSWORD # the database user password
+```
+
+### Email configuration
+The following environment variables can be used to configure the smtp/mail sending:
+```
+HC_EMAIL_HOST # the smtp host address
+HC_EMAIL_PORT # the smtp host port
+HC_EMAIL_USE_TLS # if tls should be used for smtp
+HC_EMAIL_HOST_USER # the smtp user
+HC_EMAIL_HOST_PASSWORD # the smtp user password
+```
+
+### Special configuration variables
+The following environment variables can be used to configure some "special" values for Healthchecks:
+```
+HC_HOST # the listen address
+HC_ALLOWED_HOSTS # the allowed hosts (value for dynamic container environment is `["*"]`)
+HC_SECRET_KEY # set to a random secret value (don't change as it may corrupt data in the database)
 ```
 
 ### Other configuration variables
