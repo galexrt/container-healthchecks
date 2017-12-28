@@ -8,10 +8,11 @@ DB_PORT="${DB_PORT:-3306}"
 DB_NAME="${DB_NAME:-healthchecks}"
 DB_USER="${DB_USER:-healthchecks}"
 DB_PASSWORD="${DB_PASSWORD:-healthchecks}"
-# Possible settings
-# HC_SITE_ROOT=""
-# HC_SITE_NAME=""
-export HC_SECRET_KEY="${HC_SECRET_KEY:-$(openssl rand -base64 32)}"
+# Possible settings, see README.md for more info
+# HC_SITE_ROOT
+# HC_SITE_NAME
+export HC_DEBUG="${HC_DEBUG:-False}" \
+    HC_SECRET_KEY="${HC_SECRET_KEY:-$(openssl rand -base64 32)}"
 
 if [ "$HEALTHCHECKS_USER" != "3000" ]; then
     usermod -u "$HEALTHCHECKS_USER" healthchecks
@@ -101,6 +102,7 @@ settingsConfiguration() {
 appRun() {
     databaseConfiguration
     settingsConfiguration
+    su healthchecks -c 'python3 /healthchecks/manage.py compress'
 
     echo "Correcting config file permissions ..."
     chmod 755 -f /healthchecks/hc/settings.py /healthchecks/hc/local_settings.py
