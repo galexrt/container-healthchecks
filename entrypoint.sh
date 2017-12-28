@@ -109,7 +109,7 @@ appRun() {
     su healthchecks -c 'python3 /healthchecks/manage.py migrate --noinput'
 
     { while true; do su healthchecks -c 'python3 /healthchecks/manage.py sendalerts'; sleep 30; done } &
-    exec supervisor
+    exec supervisord
 }
 
 appManagePy() {

@@ -14,7 +14,7 @@ RUN groupadd -g "$HEALTHCHECKS_GROUP" healthchecks && \
     apt-get dist-upgrade -y && \
     apt-get install -y git python3 python3-dev python3-setuptools python3-dateutil \
         python-mysqldb postgresql-server-dev-9.6 build-essential libxml2-dev \
-        libxslt-dev libz-dev default-libmysqlclient-dev supervisor && \
+        libxslt-dev libz-dev default-libmysqlclient-dev supervisor nginx && \
     easy_install3 -U pip && \
     mkdir -p /healthchecks "$DATA_DIR" && \
     chown healthchecks:healthchecks -R /healthchecks "$DATA_DIR" && \
