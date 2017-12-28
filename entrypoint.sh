@@ -103,6 +103,7 @@ appRun() {
     databaseConfiguration
     settingsConfiguration
     su healthchecks -c 'python3 /healthchecks/manage.py compress'
+    ln -s /healthchecks/static-collected/CACHE /healthchecks/static/CACHE
 
     echo "Correcting config file permissions ..."
     chmod 755 -f /healthchecks/hc/settings.py /healthchecks/hc/local_settings.py
