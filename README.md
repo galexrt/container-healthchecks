@@ -30,6 +30,7 @@ docker run \
     -e 'HC_ALLOWED_HOSTS=["*"]' \
     galexrt/healthchecks:latest
 ```
+The port of Healthchecks is `8000/tcp`.
 
 ### Database configuration
 **When you don't want to use SQLite.**
