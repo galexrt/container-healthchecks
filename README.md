@@ -64,7 +64,7 @@ HC_SECRET_KEY # set to a random secret value (if changed sessions are invalidate
 ```
 
 ### Other configuration variables
-Checkout the [`settings.py`](), if you want to set one of these variable as a setting you have to prefix it with `HC_`.
+Checkout the [healthchecks/healthchecks settings.py`](https://github.com/healthchecks/healthchecks/blob/master/hc/settings.py), if you want to set one of these variable as a setting you have to prefix it with `HC_`.
 Example for variable `SLACK_CLIENT_ID` would be environment variable `HC_SLACK_CLIENT_ID` for the container.
 
 ### Run `manage.py` inside the container
