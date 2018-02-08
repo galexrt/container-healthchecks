@@ -111,8 +111,7 @@ appRun() {
     echo "Migrating database ..."
     su healthchecks -c 'python3 /healthchecks/manage.py migrate --noinput'
 
-    { while true; do su healthchecks -c 'python3 /healthchecks/manage.py sendalerts'; sleep 30; done } &
-    exec supervisord
+    exec supervisord -c /etc/supervisor/supervisord.conf
 }
 
 appManagePy() {
