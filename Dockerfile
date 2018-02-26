@@ -1,5 +1,5 @@
 FROM debian:stretch
-MAINTAINER Alexander Trost <galexrt@googlemail.com>
+LABEL maintainer="Alexander Trost <galexrt@googlemail.com>"
 
 ENV DATA_DIR="/data" HEALTHCHECKS_VERSION="master" HEALTHCHECKS_USER="1000" HEALTHCHECKS_GROUP="1000"
 
