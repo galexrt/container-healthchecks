@@ -32,6 +32,11 @@ docker run \
 ```
 The port of Healthchecks is `8000/tcp`.
 
+A HTTPS Proxy is required for healthchecks to be reachable.
+This is caused by the CSRF verification failing if HTTPS is not used.
+The HTTPS Proxy must pass through/create `X-FORWARDED-*` headers.
+An example for a simple HTTPS proxy for Docker can be found here: [GitHub - jwilder/nginx-proxy](https://github.com/jwilder/nginx-proxy).
+
 ### Database configuration
 **When you don't want to use SQLite.**
 The following environment variables can be used to configure the database connection:
