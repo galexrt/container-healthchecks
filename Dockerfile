@@ -1,7 +1,10 @@
 FROM debian:stretch
 LABEL maintainer="Alexander Trost <galexrt@googlemail.com>"
 
-ENV DATA_DIR="/data" HEALTHCHECKS_VERSION="master" HEALTHCHECKS_USER="1000" HEALTHCHECKS_GROUP="1000"
+ENV DATA_DIR="/data" \
+    HEALTHCHECKS_VERSION="master" \
+    HEALTHCHECKS_USER="1000" \
+    HEALTHCHECKS_GROUP="1000"
 
 RUN groupadd -g "$HEALTHCHECKS_GROUP" healthchecks && \
     useradd -u "$HEALTHCHECKS_USER" -g "$HEALTHCHECKS_GROUP" -m -d /home/healthchecks -s /bin/bash healthchecks && \
