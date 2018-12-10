@@ -14,13 +14,6 @@ DB_PASSWORD="${DB_PASSWORD:-healthchecks}"
 export HC_DEBUG="${HC_DEBUG:-False}" \
     HC_SECRET_KEY="${HC_SECRET_KEY:-$(openssl rand -base64 32)}"
 
-if [ "$HEALTHCHECKS_USER" != "3000" ]; then
-    usermod -u "$HEALTHCHECKS_USER" healthchecks
-fi
-if [ "$HEALTHCHECKS_GROUP" != "3000" ]; then
-    groupmod -g "$HEALTHCHECKS_GROUP" healthchecks
-fi
-
 databaseConfiguration() {
     touch /healthchecks/hc/local_settings.py
     if [ "$DB_TYPE" = "sqlite3" ]; then
@@ -102,14 +95,14 @@ settingsConfiguration() {
 appRun() {
     databaseConfiguration
     settingsConfiguration
-    su healthchecks -c 'python3 /healthchecks/manage.py compress'
+    python3 /healthchecks/manage.py compress
     ln -s /healthchecks/static-collected/CACHE /healthchecks/static/CACHE
 
     echo "Correcting config file permissions ..."
     chmod 755 -f /healthchecks/hc/settings.py /healthchecks/hc/local_settings.py
 
     echo "Migrating database ..."
-    su healthchecks -c 'python3 /healthchecks/manage.py migrate --noinput'
+    python3 /healthchecks/manage.py migrate --noinput
 
     exec supervisord -c /etc/supervisor/supervisord.conf
 }
@@ -123,7 +116,7 @@ appManagePy() {
     fi
     echo "Running manage.py ..."
     set +e
-    exec su healthchecks -c "python3 /healthchecks/manage.py $COMMAND" "$@"
+    exec python3 /healthchecks/manage.py $COMMAND "$@"
 }
 
 appHelp() {
