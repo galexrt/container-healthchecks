@@ -37,6 +37,14 @@ COPY includes/scripts/ /usr/local/bin/
 COPY includes/supervisor/ /etc/supervisor/
 COPY includes/nginx/ /etc/nginx/
 
+RUN chown -R healthchecks:healthchecks \
+  /etc/nginx \
+  /var/lib/nginx \
+  /var/log \
+  /run
+
+USER 1000
+
 VOLUME ["$DATA_DIR"]
 
 EXPOSE 8000/tcp
