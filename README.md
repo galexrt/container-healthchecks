@@ -12,7 +12,7 @@ Simple to use Docker image for [github.com/healthchecks/healthchecks](https://gi
 
 ## Running the image
 **If you want to add a variable as a setting you have to prefix it with `HC_`.**
-By default Healthchecks uses a SQLite database, located at `/healthchecks/hc.sqlite`.
+By default Healthchecks uses a SQLite database, located at `/data/hc.sqlite`.
 ```
 docker run \
     -d \
