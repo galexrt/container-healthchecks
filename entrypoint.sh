@@ -85,7 +85,9 @@ settingsConfiguration() {
 
         if [ "$setting_type" = "plain" ]; then
             echo "$setting_key = $setting_var" >> /healthchecks/hc/local_settings.py
-	fi
+        else
+            echo "$setting_key = \"$setting_var\"" >> /healthchecks/hc/local_settings.py
+        fi
         echo "Added \"$setting_key\" (value \"$setting_var\") to local_settings.py"
     done
 }
