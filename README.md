@@ -12,7 +12,7 @@ Simple to use Docker image for [github.com/healthchecks/healthchecks](https://gi
 
 ## Running the image
 **If you want to add a variable as a setting you have to prefix it with `HC_`.**
-By default Healthchecks uses a SQLite database, located at `/healthchecks/hc.sqlite`.
+By default Healthchecks uses a SQLite database, located at `/data/hc.sqlite`.
 ```
 docker run \
     -d \
@@ -92,3 +92,47 @@ You need the container name or id of the healthchecks instance. You can get it b
 docker exec -it CONTAINER_NAME healthchecks_create_superuser.sh
 ```
 Follow the assistant that will show up to create a healthchecks superuser.
+
+### Docker-Compose
+Example docker-compose.yml
+```
+version: '3'
+
+services:
+  hc:
+    image: galexrt/healthchecks:latest
+    restart: always
+    ports:
+      - "8000:8000"
+      - "2525:2525"
+    volumes:
+      - HC_Data:/healthchecks
+      - HC_SQLite:/data
+    environment:
+      HC_HOST: "0.0.0.0"
+      HC_SECRET_KEY: "blablabla"
+      HC_ALLOWED_HOSTS: '["*", "myotherhost", "example.com", "hc.example.com"]'
+      HC_DEBUG: "False"
+      HC_DEFAULT_FROM_EMAIL: "noreply@hc.example.com"
+      HC_USE_PAYMENTS: "False"
+      HC_REGISTRATION_OPEN: "False"
+      HC_EMAIL_HOST: ""
+      HC_EMAIL_PORT: "587"
+      HC_EMAIL_HOST_USER: ""
+      HC_EMAIL_HOST_PASSWORD: ""
+      HC_EMAIL_USE_TLS: "True"
+      HC_SITE_ROOT: "https://hc.example.com"
+      HC_SITE_NAME: "Mychecks"
+      HC_MASTER_BADGE_LABEL: "Mychecks"
+      HC_PING_ENDPOINT: "https://hc.example.com/ping/"
+      HC_PING_EMAIL_DOMAIN: "hc.example.com"
+      HC_TWILIO_ACCOUNT: "None"
+      HC_TWILIO_AUTH: "None"
+      HC_TWILIO_FROM: "None"
+      HC_PD_VENDOR_KEY: "None"
+      HC_TRELLO_APP_KEY: "None"
+      
+volumes:
+  HC_SQLite:
+  HC_Data:
+```
