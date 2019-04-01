@@ -84,18 +84,8 @@ settingsConfiguration() {
         fi
 
         if [ "$setting_type" = "plain" ]; then
-            if [ "$setting_key" = "ALLOWED_HOSTS" ]; then
-	        if [ "$setting_var" = "*" ]; then
-			echo "ALLOWED_HOSTS = [\"*\"]" >> /healthchecks/hc/local_settings.py
-		else
-			echo "$setting_key = [\"$setting_var\"]" >> /healthchecks/hc/local_settings.py
-		fi
-	    else 
-                echo "$setting_key = $setting_var" >> /healthchecks/hc/local_settings.py
-	    fi
-        else
-            echo "$setting_key = \"$setting_var\"" >> /healthchecks/hc/local_settings.py
-        fi
+            echo "$setting_key = $setting_var" >> /healthchecks/hc/local_settings.py
+	fi
         echo "Added \"$setting_key\" (value \"$setting_var\") to local_settings.py"
     done
 }
