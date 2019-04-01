@@ -111,7 +111,7 @@ services:
     environment:
       HC_HOST: "0.0.0.0"
       HC_SECRET_KEY: "blablabla"
-      HC_ALLOWED_HOSTS: "hc.example.com"
+      HC_ALLOWED_HOSTS: '["*", "myotherhost", "example.com", "hc.example.com"]'
       HC_DEBUG: "False"
       HC_DEFAULT_FROM_EMAIL: "noreply@hc.example.com"
       HC_USE_PAYMENTS: "False"
