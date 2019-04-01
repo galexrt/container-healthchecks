@@ -75,11 +75,12 @@ settingsConfiguration() {
             ;;
 	    esac
 
-        if [ "$setting_key" = "SECRET_KEY" ] || [ "$setting_key" = "HC_HOST" ]; then
+        if [ "$setting_key" = "SECRET_KEY" ] || [ "$setting_key" = "HOST" ] || [ "$setting_key" = "TELEGRAM_TOKEN" ] || \
+            [ "$setting_key" = "PD_VENDOR_KEY" ] || [ "$setting_key" = "TRELLO_APP_KEY" ] || [ "$setting_key" = "TWILIO_ACCOUNT" ] \
+            [ "$setting_key" = "TWILIO_AUTH" ] || [ "$setting_key" = "TWILIO_FROM" ]; then
             setting_type="string"
-        elif [ "$setting_key" = "ALLOWED_HOSTS" ] || \
-            [ "$setting_key" = "AUTHENTICATION_BACKENDS" ] || [ "$setting_key" = "TEMPLATES" ] || \
-            [ "$setting_key" = "STATICFILES_FINDERS" ]; then
+        elif [ "$setting_key" = "ALLOWED_HOSTS" ] || [ "$setting_key" = "AUTHENTICATION_BACKENDS" ] || \
+            [ "$setting_key" = "TEMPLATES" ] || [ "$setting_key" = "STATICFILES_FINDERS" ]; then
                 setting_type="plain"
         fi
 
@@ -88,7 +89,7 @@ settingsConfiguration() {
         else
             echo "$setting_key = \"$setting_var\"" >> /healthchecks/hc/local_settings.py
         fi
-        echo "Added \"$setting_key\" (value \"$setting_var\") to local_settings.py"
+        echo "Added \"$setting_key\" (type \"$setting_type\") to local_settings.py"
     done
 }
 
