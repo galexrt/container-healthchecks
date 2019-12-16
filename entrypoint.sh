@@ -76,7 +76,7 @@ settingsConfiguration() {
 	    esac
 
         if [ "$setting_key" = "SECRET_KEY" ] || [ "$setting_key" = "HOST" ] || [ "$setting_key" = "TELEGRAM_TOKEN" ] || \
-            [ "$setting_key" = "PD_VENDOR_KEY" ] || [ "$setting_key" = "TRELLO_APP_KEY" ] || [ "$setting_key" = "TWILIO_ACCOUNT" ] \
+            [ "$setting_key" = "PD_VENDOR_KEY" ] || [ "$setting_key" = "TRELLO_APP_KEY" ] || [ "$setting_key" = "TWILIO_ACCOUNT" ] || \
             [ "$setting_key" = "TWILIO_AUTH" ] || [ "$setting_key" = "TWILIO_FROM" ]; then
             setting_type="string"
         elif [ "$setting_key" = "ALLOWED_HOSTS" ] || [ "$setting_key" = "AUTHENTICATION_BACKENDS" ] || \
