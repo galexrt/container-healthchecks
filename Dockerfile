@@ -1,8 +1,10 @@
 FROM debian:stretch
 LABEL maintainer="Alexander Trost <galexrt@googlemail.com>"
 
-ENV DATA_DIR="/data" \
-    HEALTHCHECKS_VERSION="master" \
+ENV DEBIAN_FRONTEND="noninteractive" \
+    TZ="UTC" \
+    DATA_DIR="/data" \
+    HEALTHCHECKS_VERSION="v1.11.0" \
     HEALTHCHECKS_USER="1000" \
     HEALTHCHECKS_GROUP="1000"
 
