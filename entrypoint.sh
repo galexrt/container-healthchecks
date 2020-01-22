@@ -96,7 +96,9 @@ settingsConfiguration() {
 appRun() {
     databaseConfiguration
     settingsConfiguration
+    
     python3 /healthchecks/manage.py compress
+    yes yes | python3 /healthchecks/manage.py collectstatic
     ln -s /healthchecks/static-collected/CACHE /healthchecks/static/CACHE
 
     echo "Correcting config file permissions ..."
