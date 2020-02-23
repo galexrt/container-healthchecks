@@ -122,6 +122,17 @@ Unless not specified otherwise in documentation of the [healthchecks/healthcheck
 GitHub](https://github.com/healthchecks/healthchecks) project, you just need to set the environment variables on
 the Docker container and you are done (after a restart).
 
+### Turn off Debug mode
+
+Add the env var `DEBUG: "false"` to your Docker container.
+
+```bash
+docker run \
+[...]
+    -e 'DEBUG=false' \
+[...]
+```
+
 ### Create Healthchecks superuser
 
 You need the container name or id of the healthchecks instance. You can get it by running `docker ps` and searching for the container running healthchecks.
