@@ -27,6 +27,7 @@ docker run \
     -d \
     --name=healthchecks \
     -p 80:8000 \
+    -e 'DB_NAME=/data/hc.sqlite'
     -e 'SECRET_KEY=YOUR_SECRET_KEY' \
     -e 'PING_EMAIL_DOMAIN=example.com' \
     -e 'SITE_ROOT=http://example.com' \
@@ -39,7 +40,9 @@ docker run \
     galexrt/healthchecks:latest
 ```
 
-The port of Healthchecks is `8000/tcp`.
+> **WARNING** The default uses a SQLite database, check [Database configuration](#database-configuration) section for more information.
+
+The port of Healthchecks in the container is `8000/tcp` it will be exposed to `80/tcp` in the example command.
 
 A HTTPS Proxy is required for healthchecks to be reachable.
 This is caused by the CSRF verification failing if HTTPS is not used.
@@ -51,6 +54,10 @@ An example for a simple HTTPS proxy for Docker can be found here: [GitHub - jwil
 Please checkout the official [healthchecks/healthchecks Project Running in Production guide](https://github.com/healthchecks/healthchecks#running-in-production) for information on a secure configuration.
 
 ### Database configuration
+
+**Default** is to use SQLite unless configured otherwise.
+
+For SQLite the `DB_NAME` must be set to this `/data/hc.sqlite` and the  `/data` volume must be mounted in the container as otherwise the SQLite database is lost on container deletion.
 
 **When you don't want to use SQLite.**
 The following environment variables can be used to configure the database connection:
@@ -149,7 +156,6 @@ Example `docker-compose.yml`:
 
 ```yaml
 version: '3'
-
 services:
   hc:
     image: galexrt/healthchecks:latest
@@ -157,9 +163,11 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - Data:/healthchecks
       - SQLite:/data
     environment:
+      # DB_NAME must be set like this for the /data volume to be used
+      # otherwise the SQLite db is lost on container deletion.
+      DB_NAME: "/data/hc.sqlite"
       SECRET_KEY: "blablabla123"
       ALLOWED_HOSTS: '*,myotherhost,example.com,hc.example.com'
       DEBUG: "False"
@@ -183,5 +191,4 @@ services:
       TRELLO_APP_KEY: "None"
 volumes:
   SQLite:
-  Data:
 ```
