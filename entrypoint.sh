@@ -10,12 +10,8 @@ cd /healthchecks || { echo "/healthchecks directory not found. Exit 1"; exit 1; 
 export SECRET_KEY="${SECRET_KEY:-$(openssl rand -base64 32)}"
 
 appRun() {
-    databaseConfiguration
-    settingsConfiguration
-
-    python3 /healthchecks/manage.py compress
+    python3 /healthchecks/manage.py compress --force
     yes yes | python3 /healthchecks/manage.py collectstatic
-    ln -s /healthchecks/static-collected/CACHE /healthchecks/static/CACHE
 
     echo "Correcting config file permissions ..."
     chmod 755 -f /healthchecks/hc/settings.py /healthchecks/hc/local_settings.py
@@ -65,10 +61,10 @@ case "$1" in
             $1
         else
             COMMAND="$1"
-            if [[ -n $(which "$COMMAND") ]] ; then
-                echo "=> Running command: $(which "$COMMAND") $*"
+            if command -v "$COMMAND"; then
+                echo "=> Running command: $(command -v "$COMMAND") $*"
                 shift 1
-                exec "$(which "$COMMAND")" "$@"
+                exec "$(command -v "$COMMAND")" "$@"
             else
                 appHelp
             fi
