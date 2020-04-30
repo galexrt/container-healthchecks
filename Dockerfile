@@ -30,7 +30,6 @@ RUN groupadd -g "$HEALTHCHECKS_GROUP" healthchecks && \
     git checkout $HEALTHCHECKS_VERSION && \
     pip3 install -r requirements.txt --user && \
     pip3 install mysqlclient --user" && \
-    echo "" > /healthchecks/CHANGELOG.md && \
     apt-get --purge remove -y build-essential python3-dev gnupg2 && \
     apt-get -q autoremove -y && \
     rm -rf /tmp/*
