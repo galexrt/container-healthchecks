@@ -142,10 +142,10 @@ docker run \
 
 ### Create Healthchecks superuser
 
-You need the container name or id of the healthchecks instance. You can get it by running `docker ps` and searching for the container running healthchecks.
+You need the container name or id of the healthchecks container instance. You can get it by running `docker ps` and searching for the container running healthchecks.
 
 ```bash
-docker exec -it CONTAINER_NAME healthchecks_create_superuser.sh
+docker exec -it CONTAINER_NAME python3 /healthchecks/manage.py createsuperuser
 ```
 
 Follow the assistant that will show up to create a healthchecks superuser.

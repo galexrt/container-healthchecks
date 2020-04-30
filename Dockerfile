@@ -36,15 +36,15 @@ RUN groupadd -g "$HEALTHCHECKS_GROUP" healthchecks && \
     rm -rf /tmp/*
 
 COPY entrypoint.sh /entrypoint.sh
-COPY includes/scripts/ /usr/local/bin/
 COPY includes/supervisor/ /etc/supervisor/
 COPY includes/nginx/ /etc/nginx/
 
-RUN chown -R healthchecks:healthchecks \
-  /etc/nginx \
-  /var/lib/nginx \
-  /var/log \
-  /run
+RUN chmod 755 /entrypoint.sh && \
+    chown -R healthchecks:healthchecks \
+        /etc/nginx \
+        /var/lib/nginx \
+        /var/log \
+        /run
 
 USER 1000
 
