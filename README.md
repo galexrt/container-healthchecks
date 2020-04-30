@@ -27,7 +27,7 @@ docker run \
     -d \
     --name=healthchecks \
     -p 80:8000 \
-    -e 'DB_NAME=/data/hc.sqlite'
+    -e 'DB_NAME=/data/hc.sqlite' \
     -e 'SECRET_KEY=YOUR_SECRET_KEY' \
     -e 'PING_EMAIL_DOMAIN=example.com' \
     -e 'SITE_ROOT=http://example.com' \
