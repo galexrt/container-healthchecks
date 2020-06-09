@@ -1,0 +1,14 @@
+name: weekly-release
+on:
+  schedule:
+    - cron:  '30 12 * * 4'
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Create release
+        run: |
+          make release
