@@ -1,4 +1,4 @@
-RELEASE_TAG := v$(shell grep -P -o 'HEALTHCHECKS_VERSION="([a-z0-9.-]+)"' Dockerfile | cut -d'"' -f 2)-$(shell date +%Y%m%d-%H%M%S-%3N)
+RELEASE_TAG := $(shell grep -P -o 'HEALTHCHECKS_VERSION="([a-z0-9.-]+)"' Dockerfile | cut -d'"' -f 2)-$(shell date +%Y%m%d-%H%M%S-%3N)
 
 build:
 	docker build -t galexrt/healthchecks:latest .
