@@ -41,6 +41,8 @@ docker run \
 ```
 
 > **WARNING** The default uses a SQLite database, check [Database configuration](#database-configuration) section for more information.
+>
+> **NOTE** If you want to use the [Healthchecks SMTP listener service](https://github.com/healthchecks/healthchecks#receiving-emails), add `-p 2525:2525` flag (the port inside the container `2525/tcp` cannot be changed).
 
 The port of Healthchecks in the container is `8000/tcp` it will be exposed to `80/tcp` in the example command.
 
@@ -129,7 +131,7 @@ Unless not specified otherwise in documentation of the [healthchecks/healthcheck
 GitHub](https://github.com/healthchecks/healthchecks) project, you just need to set the environment variables on
 the Docker container and you are done (after a restart).
 
-### Turn off Debug mode
+### Turn off Debug mode / Run in Production mode
 
 Add the env var `DEBUG: "false"` to your Docker container.
 

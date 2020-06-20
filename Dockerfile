@@ -34,6 +34,8 @@ RUN groupadd -g "$HEALTHCHECKS_GROUP" healthchecks && \
     apt-get -q autoremove -y && \
     rm -rf /tmp/*
 
+HEALTHCHECK CMD curl --fail http://localhost:8000 || exit 1
+
 COPY entrypoint.sh /entrypoint.sh
 COPY includes/supervisor/ /etc/supervisor/
 COPY includes/nginx/ /etc/nginx/
@@ -49,7 +51,7 @@ USER 1000
 
 VOLUME ["$DATA_DIR"]
 
-EXPOSE 8000/tcp
+EXPOSE 8000/tcp 2525/tcp
 
 ENTRYPOINT ["/entrypoint.sh"]
 
