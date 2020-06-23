@@ -1,0 +1,36 @@
+version: '3'
+services:
+  hc:
+    image: galexrt/healthchecks:latest
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - SQLite:/data
+    environment:
+      # DB_NAME must be set like this for the /data volume to be used
+      # otherwise the SQLite db is lost on container deletion.
+      DB_NAME: "/data/hc.sqlite"
+      SECRET_KEY: "blablabla123"
+      ALLOWED_HOSTS: 'localhost,healthchecks.example.com'
+      DEBUG: "False"
+      DEFAULT_FROM_EMAIL: "noreply@hc.example.com"
+      USE_PAYMENTS: "False"
+      REGISTRATION_OPEN: "False"
+      EMAIL_HOST: ""
+      EMAIL_PORT: "587"
+      EMAIL_HOST_USER: ""
+      EMAIL_HOST_PASSWORD: ""
+      EMAIL_USE_TLS: "True"
+      SITE_ROOT: "https://hc.example.com"
+      SITE_NAME: "Mychecks"
+      MASTER_BADGE_LABEL: "Mychecks"
+      PING_ENDPOINT: "https://hc.example.com/ping/"
+      PING_EMAIL_DOMAIN: "hc.example.com"
+      TWILIO_ACCOUNT: "None"
+      TWILIO_AUTH: "None"
+      TWILIO_FROM: "None"
+      PD_VENDOR_KEY: "None"
+      TRELLO_APP_KEY: "None"
+volumes:
+  SQLite:

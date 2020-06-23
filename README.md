@@ -36,7 +36,7 @@ docker run \
     -e 'EMAIL_USE_TLS=True' \
     -e 'EMAIL_HOST_USER=user@example.com' \
     -e 'EMAIL_HOST_PASSWORD=YOUR_PASSWORD' \
-    -e 'ALLOWED_HOSTS=*' \
+    -e 'ALLOWED_HOSTS=localhost,*' \
     galexrt/healthchecks:latest
 ```
 
@@ -64,45 +64,46 @@ For SQLite the `DB_NAME` must be set to this `/data/hc.sqlite` and the  `/data` 
 **When you don't want to use SQLite.**
 The following environment variables can be used to configure the database connection:
 
-```bash
-DB # Can be `postgres`, `mysql`, `sqlite3` (defaults to `sqlite3`)
-DB_HOST # the database host address
-DB_PORT # the database host port
-DB_NAME # the database name
-DB_USER # the database user
-DB_PASSWORD # the database user password
-```
+| Variable      | Description                                                   |
+| ------------- | ------------------------------------------------------------- |
+| `DB`          | Can be `postgres`, `mysql`, `sqlite3` (defaults to `sqlite3`) |
+| `DB_HOST`     | Database host address                                         |
+| `DB_PORT`     | Database host port                                            |
+| `DB_NAME`     | Database name                                                 |
+| `DB_USER`     | Database user                                                 |
+| `DB_PASSWORD` | Database user password                                        |
 
-(See https://github.com/healthchecks/healthchecks/blob/master/hc/settings.py#L99-L141)
+(See https://github.com/healthchecks/healthchecks/blob/master/hc/settings.py#L100-L142)
 
 ### Email configuration
 
-The following environment variables can be used to configure the smtp/mail sending:
-```bash
-EMAIL_HOST # the smtp host address
-EMAIL_PORT # the smtp host port
-EMAIL_USE_TLS # if tls should be used for smtp
-EMAIL_USE_SSL # if ssl should be used for smtp
-EMAIL_HOST_USER # the smtp user
-EMAIL_HOST_PASSWORD # the smtp user password
-```
+The following environment variables can be used to configure the email notifications (uses SMTP):
 
-(See https://github.com/healthchecks/healthchecks/blob/master/hc/settings.py#L172-L178)
+| Variable              | Description                    |
+| --------------------- | ------------------------------ |
+| `EMAIL_HOST`          | SMTP host address              |
+| `EMAIL_PORT`          | SMTP host port                 |
+| `EMAIL_USE_TLS`       | If tls should be used for SMTP |
+| `EMAIL_USE_SSL`       | If ssl should be used for SMTP |
+| `EMAIL_HOST_USER`     | SMTP user                      |
+| `EMAIL_HOST_PASSWORD` | SMTP user password             |
+
+(See https://github.com/healthchecks/healthchecks/blob/master/hc/settings.py#L173-L179)
 
 ### Special configuration variables
 
 The following environment variables can be used to configure some "special" values for Healthchecks:
 
-```bash
-HOST # the listen address
-ALLOWED_HOSTS # the allowed hosts (`,` separated) (value for dynamic container environment is `*`)
-SECRET_KEY # set to a random secret value (if changed sessions are invalidated)
-```
+| Variable        | Description                                                                                                                                                                |
+| --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ALLOWED_HOSTS` | Comma separated list of the allowed hosts, should be the hostnames the healthchecks container is reachable as for the Docker healthcheck to work, must include `localhost` |
+| `SECRET_KEY`    | Set to a random secret value (if unset or changed sessions are invalidated)                                                                                                |
 
 ### Other configuration variables
 
-Checkout the [`healthchecks/healthchecks settings.py`](https://github.com/healthchecks/healthchecks/blob/master/hc/settings.py), if you want to set one of these variable as a setting you have to prefix it with ``.
-Example for variable `SLACK_CLIENT_ID` would be environment variable `SLACK_CLIENT_ID` for the container.
+Checkout the [`healthchecks/healthchecks settings.py`](https://github.com/healthchecks/healthchecks/blob/master/hc/settings.py), if you want to set one of these variable as a setting you simply set it as an environment variable on the container.
+
+Example for variable `SLACK_CLIENT_ID`, you would add environment variable `SLACK_CLIENT_ID` for the container.
 
 ### Run `manage.py` inside the container
 
@@ -171,7 +172,7 @@ services:
       # otherwise the SQLite db is lost on container deletion.
       DB_NAME: "/data/hc.sqlite"
       SECRET_KEY: "blablabla123"
-      ALLOWED_HOSTS: '*,myotherhost,example.com,hc.example.com'
+      ALLOWED_HOSTS: 'localhost,healthchecks.example.com,myhealthchecks.example.com'
       DEBUG: "False"
       DEFAULT_FROM_EMAIL: "noreply@hc.example.com"
       USE_PAYMENTS: "False"
