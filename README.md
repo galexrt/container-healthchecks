@@ -13,7 +13,7 @@ Simple to use Docker image for [github.com/healthchecks/healthchecks](https://gi
 
 ## Healthchecks Version
 
-Currently Healthchecks `v1.14.0` version is installed in the image.
+Currently Healthchecks `v1.16.0` version is installed in the image.
 
 ## Running the image
 
