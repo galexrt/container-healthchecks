@@ -37,6 +37,7 @@ docker run \
     -e 'EMAIL_HOST_USER=user@example.com' \
     -e 'EMAIL_HOST_PASSWORD=YOUR_PASSWORD' \
     -e 'ALLOWED_HOSTS=localhost,*' \
+    -e 'CONTAINER_PRUNE_INTERVAL=600'
     galexrt/healthchecks:latest
 ```
 
@@ -98,6 +99,7 @@ The following environment variables can be used to configure some "special" valu
 | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `ALLOWED_HOSTS` | Comma separated list of the allowed hosts, should be the hostnames the healthchecks container is reachable as for the Docker healthcheck to work, must include `localhost` |
 | `SECRET_KEY`    | Set to a random secret value (if unset or changed sessions are invalidated)                                                                                                |
+| `CONTAINER_PRUNE_INTERVAL`| Time in seconds between executions of `prunepings`, `prunenotifications` and `pruneflips`                                                                        |
 
 ### Other configuration variables
 
@@ -192,6 +194,7 @@ services:
       TWILIO_FROM: "None"
       PD_VENDOR_KEY: "None"
       TRELLO_APP_KEY: "None"
+      CONTAINER_PRUNE_INTERVAL: 600
 volumes:
   SQLite:
 ```
