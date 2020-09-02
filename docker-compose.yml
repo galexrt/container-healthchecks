@@ -32,5 +32,6 @@ services:
       TWILIO_FROM: "None"
       PD_VENDOR_KEY: "None"
       TRELLO_APP_KEY: "None"
+      CONTAINER_PRUNE_INTERVAL: 600
 volumes:
   SQLite:

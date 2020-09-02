@@ -39,6 +39,7 @@ HEALTHCHECK CMD wget --quiet --tries=1 --spider http://localhost:8000 || exit 1
 COPY entrypoint.sh /entrypoint.sh
 COPY includes/supervisor/ /etc/supervisor/
 COPY includes/nginx/ /etc/nginx/
+COPY includes/scripts/ /scripts/
 
 RUN chmod 755 /entrypoint.sh && \
     chown -R healthchecks:healthchecks \
