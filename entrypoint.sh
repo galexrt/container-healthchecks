@@ -8,6 +8,8 @@ cd /healthchecks || { echo "/healthchecks directory not found. Exit 1"; exit 1; 
 
 # Set SECRET_KEY if empty
 export SECRET_KEY="${SECRET_KEY:-$(openssl rand -base64 32)}"
+# Set CONTAINER_PRUNE_INTERVAL if empty
+export CONTAINER_PRUNE_INTERVAL="${CONTAINER_PRUNE_INTERVAL:-600}"
 
 appRun() {
     python3 /healthchecks/manage.py compress --force
