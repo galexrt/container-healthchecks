@@ -99,7 +99,7 @@ The following environment variables can be used to configure some "special" valu
 | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `ALLOWED_HOSTS` | Comma separated list of the allowed hosts, should be the hostnames the healthchecks container is reachable as for the Docker healthcheck to work, must include `localhost` |
 | `SECRET_KEY`    | Set to a random secret value (if unset or changed sessions are invalidated)                                                                                                |
-| `CONTAINER_PRUNE_INTERVAL`| Time in seconds between executions of `prunepings`, `prunenotifications` and `pruneflips`                                                                        |
+| `CONTAINER_PRUNE_INTERVAL`| Time in seconds between executions of `prunepings`, `prunenotifications` and `pruneflips` (default: 600 seconds)                                                |
 
 ### Other configuration variables
 
