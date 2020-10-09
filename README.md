@@ -38,10 +38,12 @@ docker run \
     -e 'EMAIL_HOST_PASSWORD=YOUR_PASSWORD' \
     -e 'ALLOWED_HOSTS=localhost,*' \
     -e 'CONTAINER_PRUNE_INTERVAL=600'
+    -v /opt/docker/healthchecks/data:/data \
     galexrt/healthchecks:latest
 ```
 
 > **WARNING** The default uses a SQLite database, check [Database configuration](#database-configuration) section for more information.
+> If you are not using SQLite, you can remove the `-v ...:...` flag, unless needed otherwise.
 >
 > **NOTE** If you want to use the [Healthchecks SMTP listener service](https://github.com/healthchecks/healthchecks#receiving-emails), add `-p 2525:2525` flag (the port inside the container `2525/tcp` cannot be changed).
 
@@ -60,7 +62,7 @@ Please checkout the official [healthchecks/healthchecks Project Running in Produ
 
 **Default** is to use SQLite unless configured otherwise.
 
-For SQLite the `DB_NAME` must be set to this `/data/hc.sqlite` and the  `/data` volume must be mounted in the container as otherwise the SQLite database is lost on container deletion.
+**WARNING** For SQLite the `DB_NAME` must be set to this `/data/hc.sqlite`. A volume  should be mounted to `/data` (`docker run [...] -v /opt/docker/healthchecks/data:/data [...] galexrt/healthchecks:latest`) inside the container as otherwise the SQLite database is lost on container deletion.
 
 **When you don't want to use SQLite.**
 The following environment variables can be used to configure the database connection:
