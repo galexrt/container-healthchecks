@@ -4,7 +4,7 @@ LABEL maintainer="Alexander Trost <galexrt@googlemail.com>"
 ENV DEBIAN_FRONTEND="noninteractive" \
     TZ="UTC" \
     DATA_DIR="/data" \
-    HEALTHCHECKS_VERSION="v1.18.0" \
+    HEALTHCHECKS_VERSION="v1.19.0" \
     HEALTHCHECKS_USER="1000" \
     HEALTHCHECKS_GROUP="1000"
 
