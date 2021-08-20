@@ -24,4 +24,4 @@ jobs:
           password: ${{ secrets.REGISTRY_QUAYIO_PASSWORD }}
       - name: Build Container Image
         run: |
-          make container-registrylogin container-release VERSION="${{ github.event.release.tag_name }}"
+          make container-release VERSION="${{ github.event.release.tag_name }}"
