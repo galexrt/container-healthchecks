@@ -26,4 +26,4 @@ jobs:
         run: |
           # Default main branch name
           VERSION="main"
-          make container-build container-push VERSION="${VERSION:-${{ github.event.release.tag_name }}}"
+          make container-build container-push VERSION="${VERSION:-${GITHUB_REF/refs\/tags\//}}"
