@@ -45,7 +45,7 @@ container-release:
 ## CI ONLY: This is used to login to the container image registries
 container-registrylogin:
 	@echo "Logging into ghcr.io"
-	@echo $$GITHUB_TOKEN | docker login ghcr.io -u $$REGISTRY_GHCRIO_USERNAME --password-stdin
+	@echo $$GITHUB_TOKEN | docker login --username $$REGISTRY_GHCRIO_USERNAME --password-stdin ghcr.io
 	@echo "Logging into quay.io"
-	@echo $$REGISTRY_QUAYIO_PASSWORD | docker login quay.io -u $$REGISTRY_QUAYIO_USERNAME --password-stdin
+	@echo $$REGISTRY_QUAYIO_PASSWORD | docker login --username $$REGISTRY_QUAYIO_USERNAME --password-stdin quay.io
 	@echo "Registry login completed"
