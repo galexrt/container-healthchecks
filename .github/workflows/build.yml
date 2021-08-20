@@ -24,8 +24,8 @@ jobs:
           password: ${{ secrets.REGISTRY_QUAYIO_PASSWORD }}
       - name: Build Container Image
         run: |
-          # Tags
           if [[ "${GITHUB_REF}" =~ ^refs/tags/* ]]; then
+              # Tags
               VERSION="${GITHUB_REF/refs\/tags\//}"
           else
               # Branch
