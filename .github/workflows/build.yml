@@ -25,7 +25,7 @@ jobs:
       - name: Build Container Image
         run: |
           # Tags
-          if [ "${GITHUB_REF}" =~ ^refs/tags/* ]; then
+          if [[ "${GITHUB_REF}" =~ ^refs/tags/* ]]; then
               VERSION="${GITHUB_REF/refs\/tags\//}"
           else
               # Branch
