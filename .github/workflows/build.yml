@@ -1,0 +1,15 @@
+name: build
+on:
+  push:
+    branches:
+      - "main"
+    tags:
+      - 'v*'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Container Image
+        run: |
+          make container-registrylogin container-release VERSION="${{ github.event.release.tag_name }}"
