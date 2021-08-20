@@ -37,7 +37,3 @@ container-push:
 		docker push ghcr.io/galexrt/healthchecks:$(VERSION_SHORT); \
 		docker push quay.io/galexrt/healthchecks:$(VERSION_SHORT); \
 	fi
-
-## Build and push the versioned images
-container-release:
-	$(MAKE) container-build container-push
