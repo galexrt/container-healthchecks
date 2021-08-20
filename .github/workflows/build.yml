@@ -24,6 +24,12 @@ jobs:
           password: ${{ secrets.REGISTRY_QUAYIO_PASSWORD }}
       - name: Build Container Image
         run: |
-          # Default main branch name
-          VERSION="main"
-          make container-build container-push VERSION="${VERSION:-${GITHUB_REF/refs\/tags\//}}"
+          # Tags
+          if [ "${GITHUB_REF}" =~ ^refs/tags/* ]; then
+              VERSION="${GITHUB_REF/refs\/tags\//}"
+          else
+              # Branch
+              VERSION="${GITHUB_REF/refs\/heads\//}"
+          fi
+          
+          make container-build container-push VERSION="${VERSION:-main}"
