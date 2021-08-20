@@ -24,4 +24,6 @@ jobs:
           password: ${{ secrets.REGISTRY_QUAYIO_PASSWORD }}
       - name: Build Container Image
         run: |
-          make container-release VERSION="${{ github.event.release.tag_name }}"
+          # Default main branch name
+          VERSION="main"
+          make container-release VERSION="${VERSION:-${{ github.event.release.tag_name }}}"
