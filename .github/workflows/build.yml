@@ -16,4 +16,9 @@ jobs:
           REGISTRY_QUAYIO_USERNAME: ${{ secrets.REGISTRY_QUAYIO_USERNAME }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          echo "Logging into ghcr.io"
+          echo $GITHUB_TOKEN | docker login --username ${REGISTRY_GHCRIO_USERNAME} --password-stdin ghcr.io
+          echo "Logging into quay.io"
+          echo $REGISTRY_QUAYIO_PASSWORD | docker login --username ${REGISTRY_QUAYIO_USERNAME} --password-stdin quay.io
+          echo "Registry logins completed."
           make container-registrylogin container-release VERSION="${{ github.event.release.tag_name }}"

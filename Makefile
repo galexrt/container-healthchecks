@@ -41,11 +41,3 @@ container-push:
 ## Build and push the versioned images
 container-release:
 	$(MAKE) container-build container-push
-
-## CI ONLY: This is used to login to the container image registries
-container-registrylogin:
-	@echo "Logging into ghcr.io"
-	@echo $$GITHUB_TOKEN | docker login --username $$REGISTRY_GHCRIO_USERNAME --password-stdin ghcr.io
-	@echo "Logging into quay.io"
-	@echo $$REGISTRY_QUAYIO_PASSWORD | docker login --username $$REGISTRY_QUAYIO_USERNAME --password-stdin quay.io
-	@echo "Registry login completed"
