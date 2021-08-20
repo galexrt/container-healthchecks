@@ -11,5 +11,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build Container Image
+        env:
+          REGISTRY_QUAYIO_PASSWORD: ${{ secrets.REGISTRY_QUAYIO_PASSWORD }}
+          REGISTRY_QUAYIO_USERNAME: ${{ secrets.REGISTRY_QUAYIO_USERNAME }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           make container-registrylogin container-release VERSION="${{ github.event.release.tag_name }}"
