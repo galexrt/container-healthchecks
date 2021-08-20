@@ -8,7 +8,7 @@ VERSION ?= main
 VERSION_SHORT ?= $(shell cut -d '-' -f 1 <<< "$(VERSION)")
 
 # CI Helper Variables
-REGISTRY_GHCRIO_USERNAME ?= $(shell cut -d '/' -f 1 <<< "$(GITHUB_REPOSITORY)")
+REGISTRY_GHCRIO_USERNAME ?= $(shell cut -d '/' -f 1 <<< "$$GITHUB_REPOSITORY")
 
 ## Create and push a newly generated git tag to trigger a new automated CI run
 release-tag:
