@@ -1,3 +1,5 @@
+.EXPORT_ALL_VARIABLES:
+
 HEALTHCHECKS_VERSION := $(shell grep -P -o 'HEALTHCHECKS_VERSION="([a-z0-9.-]+)"' Dockerfile | cut -d'"' -f 2)
 RELEASE_TAG := $(HEALTHCHECKS_VERSION)-$(shell date +%Y%m%d-%H%M%S-%3N)
 
@@ -43,7 +45,7 @@ container-release:
 ## CI ONLY: This is used to login to the container image registries
 container-registrylogin:
 	@echo "Logging into ghcr.io"
-	@echo $(GITHUB_TOKEN) | docker login ghcr.io -u $(REGISTRY_GHCRIO_USERNAME) --password-stdin
+	@echo $$GITHUB_TOKEN | docker login ghcr.io -u $$REGISTRY_GHCRIO_USERNAME --password-stdin
 	@echo "Logging into quay.io"
-	@echo $(REGISTRY_QUAYIO_PASSWORD) | docker login quay.io -u $(REGISTRY_QUAYIO_USERNAME) --password-stdin
+	@echo $$REGISTRY_QUAYIO_PASSWORD | docker login quay.io -u $$REGISTRY_QUAYIO_USERNAME --password-stdin
 	@echo "Registry login completed"

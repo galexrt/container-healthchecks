@@ -16,5 +16,4 @@ jobs:
           REGISTRY_QUAYIO_USERNAME: ${{ secrets.REGISTRY_QUAYIO_USERNAME }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if [ -z ${GITHUB_TOKEN+x} ]; then echo "GITHUB_TOKEN is unset"; else echo "GITHUB_TOKEN is set"; fi
           make container-registrylogin container-release VERSION="${{ github.event.release.tag_name }}"
