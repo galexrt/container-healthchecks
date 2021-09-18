@@ -1,23 +1,23 @@
-ARG HEALTHCHECKS_VERSION="v1.22.0"
-ARG BUILD_DATE="UNSET"
-ARG VCS_REF="UNSET"
-
 FROM debian:buster
 
-LABEL maintainer="Alexander Trost <galexrt@googlemail.com>"
+ARG BUILD_DATE="N/A"
+ARG REVISION="N/A"
 
-LABEL org.label-schema.schema-version="1.0"
-LABEL org.label-schema.build-date="${BUILD_DATE}"
-LABEL org.label-schema.name="galexrt/healthchecks"
-LABEL org.label-schema.description="Simple to use Container Image for https://github.com/healthchecks/healthchecks."
-LABEL org.label-schema.url="https://github.com/galexrt/docker-healthchecks"
-LABEL org.label-schema.vcs-url="https://github.com/galexrt/docker-healthchecks"
-LABEL org.label-schema.vcs-ref="${VCS_REF}"
-LABEL org.label-schema.vendor="galexrt"
-LABEL org.label-schema.version="${HEALTHCHECKS_VERSION}"
+ARG HEALTHCHECKS_VERSION="v1.22.0"
+ARG TZ="UTC"
 
-ENV DEBIAN_FRONTEND="noninteractive" \
-    TZ="UTC" \
+LABEL org.opencontainers.image.authors="Alexander Trost <galexrt@googlemail.com>" \
+    org.opencontainers.image.created="${BUILD_DATE}" \
+    org.opencontainers.image.title="galexrt/container-healthchecks" \
+    org.opencontainers.image.description="Container Image with TeamSpeak³ Server." \
+    org.opencontainers.image.documentation="https://github.com/galexrt/container-healthchecks/blob/main/README.md" \
+    org.opencontainers.image.url="https://github.com/galexrt/container-healthchecks" \
+    org.opencontainers.image.source="https://github.com/galexrt/container-healthchecks" \
+    org.opencontainers.image.revision="${REVISION}" \
+    org.opencontainers.image.vendor="galexrt" \
+    org.opencontainers.image.version="${HEALTHCHECKS_VERSION}"
+
+ENV TZ="${TZ}" \
     DATA_DIR="/data" \
     HEALTHCHECKS_VERSION="${HEALTHCHECKS_VERSION}" \
     HEALTHCHECKS_USER="1000" \
@@ -26,14 +26,14 @@ ENV DEBIAN_FRONTEND="noninteractive" \
 RUN groupadd -g "${HEALTHCHECKS_GROUP}" healthchecks && \
     useradd -u "${HEALTHCHECKS_USER}" -g "${HEALTHCHECKS_GROUP}" -m -d /home/healthchecks -s /bin/bash healthchecks && \
     apt-get update && \
-    apt-get install -y wget sudo gnupg2 && \
+    DEBIAN_FRONTEND="noninteractive" apt-get install -y wget sudo gnupg2 && \
     echo "deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main" > /etc/apt/sources.list.d/psql.list && \
     wget -q -O- https://www.postgresql.org/media/keys/ACCC4CF8.asc | \
     apt-key add - && \
     apt-get update && \
     apt-get upgrade -y && \
     apt-get autoremove -y && \
-    apt-get install -y git python3 python3-dev python3-setuptools python3-pip \
+    DEBIAN_FRONTEND="noninteractive" apt-get install -y git python3 python3-dev python3-setuptools python3-pip \
         python3-dateutil python3-six python-mysqldb postgresql-server-dev-9.6 \
         build-essential libxml2-dev libxslt-dev libz-dev default-libmysqlclient-dev \
         supervisor nginx && \
@@ -63,6 +63,8 @@ RUN chmod 755 /entrypoint.sh /scripts/*.sh && \
 USER 1000
 
 VOLUME ["${DATA_DIR}"]
+
+WORKDIR "${DATA_DIR}"
 
 EXPOSE 8000/tcp 2525/tcp
 

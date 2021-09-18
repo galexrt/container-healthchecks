@@ -1,4 +1,4 @@
-# docker-healthchecks
+# container-healthchecks
 
 Simple to use Container Image for [github.com/healthchecks/healthchecks](https://github.com/healthchecks/healthchecks).
 
