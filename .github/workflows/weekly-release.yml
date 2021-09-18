@@ -7,6 +7,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1.10.0
+        with:
+          registry: ghcr.io
+          username: galexrt
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Login to Quay.io Container Registry
+        uses: docker/login-action@v1.10.0
+        with:
+          registry: quay.io
+          username: ${{ secrets.REGISTRY_QUAYIO_USERNAME }}
+          password: ${{ secrets.REGISTRY_QUAYIO_PASSWORD }}
       - name: Create release
         run: |
-          make release-tag
+          make release

@@ -9,8 +9,9 @@ VERSION ?= main
 VERSION_SHORT ?= $(shell cut -d '-' -f 1 <<< "$(VERSION)")
 
 ## Create and push a newly generated git tag to trigger a new automated CI run
-release-tag:
+release:
 	git tag $(RELEASE_TAG)
+	$(MAKE) container-build container-push VERSION="$(RELEASE_TAG)"
 	git push origin $(RELEASE_TAG)
 
 ## Build the container image
