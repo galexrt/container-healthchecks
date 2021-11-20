@@ -3,7 +3,7 @@ FROM debian:buster
 ARG BUILD_DATE="N/A"
 ARG REVISION="N/A"
 
-ARG HEALTHCHECKS_VERSION="v1.23.1"
+ARG HEALTHCHECKS_VERSION="v1.24.1"
 ARG TZ="UTC"
 
 LABEL org.opencontainers.image.authors="Alexander Trost <galexrt@googlemail.com>" \
