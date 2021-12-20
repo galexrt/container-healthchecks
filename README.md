@@ -43,7 +43,7 @@ docker run \
     --env 'ALLOWED_HOSTS=localhost,*' \
     --env 'CONTAINER_PRUNE_INTERVAL=600'
     --volume /opt/docker/healthchecks/data:/data \
-    galexrt/healthchecks:latest
+    ghcr.io/galexrt/healthchecks:main
 ```
 
 **WARNING** The default uses a SQLite database, check [Database configuration](#database-configuration) section for more information.
@@ -175,7 +175,7 @@ Follow the assistant that will show up to create a healthchecks superuser.
 version: '3'
 services:
   hc:
-    image: galexrt/healthchecks:latest
+    image: ghcr.io/galexrt/healthchecks:main
     restart: always
     ports:
       - "8000:8000"
