@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:bullseye
 
 ARG BUILD_DATE="N/A"
 ARG REVISION="N/A"
@@ -34,7 +34,7 @@ RUN groupadd -g "${HEALTHCHECKS_GROUP}" healthchecks && \
     apt-get upgrade -y && \
     apt-get autoremove -y && \
     DEBIAN_FRONTEND="noninteractive" apt-get install -y git python3 python3-dev python3-setuptools python3-pip \
-        python3-dateutil python3-six python-mysqldb postgresql-server-dev-9.6 \
+        python3-dateutil python3-six python3-mysqldb postgresql-server-dev-9.6 \
         build-essential libxml2-dev libxslt-dev libz-dev default-libmysqlclient-dev \
         supervisor nginx && \
     mkdir -p /healthchecks "${DATA_DIR}" && \
