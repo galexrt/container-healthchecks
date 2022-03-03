@@ -6,7 +6,7 @@ RELEASE_TAG := $(APPLICATION_VERSION)-$(shell date +%Y%m%d-%H%M%S-%3N)
 
 # Default is the main branch as that is where the "latest" tag should be
 VERSION ?= main
-VERSION_SHORT ?= $(shell cut -d '-' -f 1 <<< "$(VERSION)")
+VERSION_SHORT = $(shell cut -d '-' -f 1 <<< "$(VERSION)")
 
 ## Create and push a newly generated git tag to trigger a new automated CI run
 release:
