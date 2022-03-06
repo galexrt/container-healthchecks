@@ -1,7 +1,7 @@
 version: '3'
 services:
   hc:
-    image: ghcr.io/galexrt/healthchecks:main
+    image: ghcr.io/galexrt/healthchecks:v1.25.0
     restart: always
     ports:
       - "8000:8000"
