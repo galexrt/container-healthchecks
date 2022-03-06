@@ -1,16 +1,24 @@
 version: '3'
+
 services:
-  hc:
+  healthchecks:
     image: ghcr.io/galexrt/healthchecks:v1.25.0
     restart: always
     ports:
       - "8000:8000"
-    volumes:
-      - SQLite:/data
+    # Remove the brackets and uncomment the `SQLite` volumes entry
+    volumes: []
+      #- SQLite:/data
     environment:
-      # DB_NAME must be set like this for the /data volume to be used
-      # otherwise the SQLite db is lost on container deletion.
-      DB_NAME: "/data/hc.sqlite"
+      # Database config
+      # For more information see https://github.com/galexrt/container-healthchecks/blob/main/README.md#database-configuration
+      DB: "mysql"
+      DB_HOST: ""
+      DB_PORT: "3306"
+      DB_NAME: "healthchecks"
+      DB_USER: "healthchecks"
+      DB_PASSWORD: "9tjgMCf0Ha0ZNyZwcUe9XzYG"
+      # Healthchecks app config
       SECRET_KEY: "blablabla123"
       ALLOWED_HOSTS: 'localhost,healthchecks.example.com'
       DEBUG: "False"
@@ -27,11 +35,33 @@ services:
       MASTER_BADGE_LABEL: "Mychecks"
       PING_ENDPOINT: "https://hc.example.com/ping/"
       PING_EMAIL_DOMAIN: "hc.example.com"
+      # Healthchecks integration config
       TWILIO_ACCOUNT: "None"
       TWILIO_AUTH: "None"
       TWILIO_FROM: "None"
       PD_VENDOR_KEY: "None"
       TRELLO_APP_KEY: "None"
       CONTAINER_PRUNE_INTERVAL: 600
+    # Comment the `links` and `depends_on` out if you want to use SQLite instead of mysql
+    links:
+      - mysql
+    depends_on:
+      - mysql
+  # MySQL MariaDB databse server
+  mysql:
+    image: mariadb:10.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'healthchecks'
+      # If you change the mysql user/password, you must update the `healthchecks` container
+      # mysql credentials as well
+      MYSQL_USER: 'healthchecks'
+      MYSQL_PASSWORD: '9tjgMCf0Ha0ZNyZwcUe9XzYG'
+    # Where our data will be persisted
+    volumes:
+      - mysql:/var/lib/mysql
+
 volumes:
-  SQLite:
+  mysql:
+  # If you want to use SQLite instead of MySQL, uncomment the `SQLite` lines
+  #SQLite:

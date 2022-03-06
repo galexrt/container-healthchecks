@@ -66,9 +66,10 @@ Please checkout the official [healthchecks/healthchecks Project Running in Produ
 
 **The default setting uses SQLite** unless configured otherwise.
 
-**WARNING** For SQLite the `DB_NAME` must be set to this `/data/hc.sqlite`. A volume  should be mounted to `/data` (`docker run [...] --volume /opt/docker/healthchecks/data:/data [...] galexrt/healthchecks:latest`) inside the container as otherwise the SQLite database is lost on container deletion.
+**WARNING** For SQLite the `DB_NAME` must be set to this `/data/hc.sqlite`. A volume should be mounted to `/data` (`docker run [...] --volume /opt/docker/healthchecks/data:/data [...] galexrt/healthchecks:latest`) inside the container as otherwise the SQLite database is lost on container deletion.
 
-**When you don't want to use SQLite.**
+#### Want to use MySQL or Postgres?
+
 The following environment variables can be used to configure the database connection:
 
 | Variable      | Description                                                   |
@@ -81,6 +82,8 @@ The following environment variables can be used to configure the database connec
 | `DB_PASSWORD` | Database user password                                        |
 
 (See https://github.com/healthchecks/healthchecks/blob/master/hc/settings.py#L100-L142)
+
+[The `docker-compose.yml` shows an example of the environment variables for using a MySQL database server.](docker-compose.yml)
 
 ### Email Configuration
 
