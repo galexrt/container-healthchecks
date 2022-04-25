@@ -2,7 +2,7 @@ version: '3'
 
 services:
   healthchecks:
-    image: ghcr.io/galexrt/healthchecks:v1.25.0
+    image: quay.io/galexrt/healthchecks:v2.0.1
     restart: always
     ports:
       - "8000:8000"

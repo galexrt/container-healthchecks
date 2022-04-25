@@ -17,7 +17,7 @@ Container Image Tags:
 
 ## Healthchecks Version
 
-Currently Healthchecks `v1.25.0` version is installed in the image.
+Currently Healthchecks `v2.0.1` version is installed in the image.
 
 ## Running The Container Image
 
@@ -43,7 +43,7 @@ docker run \
     --env 'ALLOWED_HOSTS=localhost,*' \
     --env 'CONTAINER_PRUNE_INTERVAL=600'
     --volume /opt/docker/healthchecks/data:/data \
-    ghcr.io/galexrt/healthchecks:main
+    quay.io/galexrt/healthchecks:main
 ```
 
 **WARNING** The default uses a SQLite database, check [Database configuration](#database-configuration) section for more information.
@@ -178,7 +178,7 @@ Follow the assistant that will show up to create a healthchecks superuser.
 version: '3'
 services:
   hc:
-    image: ghcr.io/galexrt/healthchecks:main
+    image: quay.io/galexrt/healthchecks:main
     restart: always
     ports:
       - "8000:8000"
