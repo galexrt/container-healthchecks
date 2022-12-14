@@ -3,7 +3,7 @@ FROM debian:bullseye
 ARG BUILD_DATE="N/A"
 ARG REVISION="N/A"
 
-ARG HEALTHCHECKS_VERSION="v2.4.1"
+ARG HEALTHCHECKS_VERSION="v2.5"
 ARG TZ="UTC"
 
 LABEL org.opencontainers.image.authors="Alexander Trost <galexrt@googlemail.com>" \
