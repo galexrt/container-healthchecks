@@ -17,7 +17,7 @@ Container Image Tags:
 
 ## Healthchecks Version
 
-Currently Healthchecks `v2.5` version is installed in the image.
+Currently Healthchecks `v2.6` version is installed in the image.
 
 ## Running The Container Image
 
