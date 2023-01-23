@@ -215,3 +215,9 @@ services:
 volumes:
   SQLite:
 ```
+
+## Release
+
+1. Run `make release` locally.
+2. Wait for completion.
+3. Container images will be pushed automatically to the registries.
