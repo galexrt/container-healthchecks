@@ -2,7 +2,7 @@ version: '3'
 
 services:
   healthchecks:
-    image: quay.io/galexrt/healthchecks:v2.6.1
+    image: quay.io/galexrt/healthchecks:v2.7
     restart: always
     ports:
       - "8000:8000"
@@ -30,6 +30,8 @@ services:
       EMAIL_HOST_USER: ""
       EMAIL_HOST_PASSWORD: ""
       EMAIL_USE_TLS: "True"
+      #for email listener service
+      SMTPD_PORT: "2525"
       SITE_ROOT: "https://hc.example.com"
       SITE_NAME: "Mychecks"
       MASTER_BADGE_LABEL: "Mychecks"
