@@ -2,7 +2,7 @@ version: '3'
 
 services:
   healthchecks:
-    image: quay.io/galexrt/healthchecks:v2.7
+    image: quay.io/galexrt/healthchecks:v2.8
     restart: always
     ports:
       - "8000:8000"
