@@ -51,7 +51,7 @@ services:
       - mysql
   # MySQL MariaDB databse server
   mysql:
-    image: mariadb:10.7
+    image: mariadb:10.11
     restart: always
     environment:
       MYSQL_DATABASE: 'healthchecks'
