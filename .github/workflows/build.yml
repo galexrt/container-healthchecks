@@ -11,13 +11,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v1.14.1
+        uses: docker/login-action@v3.0.0
         with:
           registry: ghcr.io
           username: galexrt
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Login to Quay.io Container Registry
-        uses: docker/login-action@v1.14.1
+        uses: docker/login-action@v3.0.0
         with:
           registry: quay.io
           username: ${{ secrets.REGISTRY_QUAYIO_USERNAME }}
