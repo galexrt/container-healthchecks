@@ -1,4 +1,4 @@
-FROM debian:bullseye
+FROM debian:bookworm
 
 ARG BUILD_DATE="N/A"
 ARG REVISION="N/A"
