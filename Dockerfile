@@ -27,7 +27,7 @@ RUN groupadd -g "${HEALTHCHECKS_GROUP}" healthchecks && \
     useradd -u "${HEALTHCHECKS_USER}" -g "${HEALTHCHECKS_GROUP}" -m -d /home/healthchecks -s /bin/bash healthchecks && \
     apt-get update && \
     DEBIAN_FRONTEND="noninteractive" apt-get install -y wget sudo gnupg2 && \
-    echo "deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main" > /etc/apt/sources.list.d/psql.list && \
+    echo "deb http://apt.postgresql.org/pub/repos/apt/ bullseye-pgdg main" > /etc/apt/sources.list.d/psql.list && \
     wget -q -O- https://www.postgresql.org/media/keys/ACCC4CF8.asc | \
     apt-key add - && \
     apt-get update && \
