@@ -1,4 +1,4 @@
-FROM debian:bullseye
+FROM docker.io/library/debian:bullseye
 
 ARG BUILD_DATE="N/A"
 ARG REVISION="N/A"
