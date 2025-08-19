@@ -1,4 +1,4 @@
-FROM docker.io/library/debian:bullseye
+FROM docker.io/library/debian:trixie
 
 ARG BUILD_DATE="N/A"
 ARG REVISION="N/A"
