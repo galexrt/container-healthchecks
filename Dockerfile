@@ -1,4 +1,4 @@
-FROM docker.io/library/debian:trixie
+FROM docker.io/library/debian:trixie-20260623
 
 ARG BUILD_DATE="N/A"
 ARG REVISION="N/A"
