@@ -1,5 +1,13 @@
 # container-healthchecks
 
+## DEPERECATED
+
+This image is deprecated and will not receive any updates!
+
+[Healthchecks project](https://github.com/healthchecks/healthchecks) provides their [own official Docker image on Docker Hub](https://hub.docker.com/r/healthchecks/healthchecks).
+
+---
+
 Simple to use Container Image for [github.com/healthchecks/healthchecks](https://github.com/healthchecks/healthchecks).
 
 Container Image available from:
